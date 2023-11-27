@@ -8,7 +8,7 @@ require "db-connect.php";
 ?> 
 <html>
     <head>
-        <title>Posts | E - Donate Mo</title>
+        <title>Donation | E - Donate Mo</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">	
     </head>
 

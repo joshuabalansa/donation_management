@@ -175,7 +175,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table edonatemo.users: ~1 rows (approximately)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 INSERT INTO `users` (`id`, `email`, `name`, `password`, `contact`, `address`, `token`, `created_at`, `access_type`) VALUES
-	(8, 'test@gmail.com', 'as', '202cb962ac59075b964b07152d234b70', '123', '111', '', '2023-11-27 22:50:16', 'user');
+	(8, 'test@gmail.com', 'as', '202cb962ac59075b964b07152d234b70', '123', '111', '', '2023-11-27 22:50:16', 'user'),
+	(9, 'tests@gmail.com', 'as2\\\'', '202cb962ac59075b964b07152d234b70', 'asdf\\\'', '\\\'', '', '2023-11-27 22:57:49', 'user');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

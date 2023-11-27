@@ -1,21 +1,26 @@
+<?php
+session_start();
+include "check-session.php";
+include "function.php";
+require "db-connect.php";
+
+    $show = (isset($_GET['load']) && $_GET['load'] !='') ? $_GET['load'] : '';
+?> 
 <html>
-<head>
-	<title>Reports</title>
-	<link rel="stylesheet" type="text/css" href="style.css">	
-</head>
+    <head>
+        <title>About | E - Donate Mo</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">	
+    </head>
 
-<body>
-   
-    
-    
-        About
-    
-
-
-
-
-
-
-
-</body>
+    <body>
+        <?php 
+        include 'header.php';
+        ?>
+        <div class="wrapper">
+            
+        </div>
+        <?php 
+        include 'footer.php';
+        ?>
+    </body>
 </html>
