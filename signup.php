@@ -12,12 +12,12 @@ $signup_success = '';
 
 if (isset($_POST['signupBtn'])) {
 
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $password_confirm = $_POST['password_confirm'];
-    $contact = $_POST['contact'];
-    $address = $_POST['address'];
+    $name = $connect->real_escape_string($_POST['name']);
+    $email = $connect->real_escape_string($_POST['email']);
+    $password = $connect->real_escape_string($_POST['password']);
+    $password_confirm = $connect->real_escape_string($_POST['password_confirm']);
+    $contact = $connect->real_escape_string($_POST['contact']);
+    $address = $connect->real_escape_string($_POST['address']);
     #var_dump($_POST);
 
     $error = [];
@@ -56,7 +56,7 @@ if (isset($_POST['signupBtn'])) {
         }
 
         $connect->close();
-        
+
         $name = '';
         $email = '';
         $password = '';

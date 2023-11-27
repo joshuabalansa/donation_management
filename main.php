@@ -1,4 +1,11 @@
     <?php
+
+
+session_start();
+include "check-session.php";
+include "function.php";
+require "db-connect.php";
+
     $show = (isset($_GET['load']) && $_GET['load'] !='') ? $_GET['load'] : '';
     ?> 
 
@@ -24,7 +31,7 @@
                 </nav>
                 
             
-                <a class="start" href="index.php">Logout</a>
+                <a class="start" href="logout.php">Logout</a>
             </div>
         </div>
         

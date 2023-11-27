@@ -1,3 +1,38 @@
+<?php
+
+
+session_start();
+include "function.php";
+require "db-connect.php";
+
+$email = '';
+$password = '';
+
+if (isset($_POST['loginBtn'])) {
+
+    $email = $connect->real_escape_string($_POST['email']);
+    $password = $connect->real_escape_string($_POST['password']);
+
+    $error = [];
+
+    if (empty($email)) {
+        $error['email'] = 'Email is required!';
+    }
+
+    if (empty($password)) {
+        $error['password'] = 'Password is required!';
+    }
+
+    $auth = authUser($connect, $email, $password);
+
+    if (!is_null($auth)) {
+        $_SESSION['user'] = $auth;
+        header('Location: main.php');
+    } else {
+        $error['email'] = 'Invalid Email and Password!';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,14 +47,14 @@
         <h1>E - Donate Mo</h1>
     </header>
     <h2>Admin Login</h2>
-    <form action="login.php" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required><br>
+    <form action="index.php" method="post">
+        <label for="email">Email: <?php echo (isset($error['email']))? $error['email'] : '';?></label>
+        <input type="text" id="email" name="email" ><br>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br>
+        <label for="password">Password: <?php echo (isset($error['password']))? $error['password'] : '';?></label>
+        <input type="password" id="password" name="password" ><br>
 
-        <input type="submit" value="Login">
+        <input type="submit" value="Login" name="loginBtn">
     </form>
 </body>
 </html>
