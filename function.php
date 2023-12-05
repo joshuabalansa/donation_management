@@ -12,6 +12,18 @@ function check_user_email($connect, $email)
 	}
 }
 
+function check_user_email_except_user($connect, $email, $id)
+{
+	$sql = "SELECT id FROM users WHERE id<>'$id' AND email='$email'";
+	$result = $connect->query($sql);
+
+	if ($result->num_rows > 0) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 
 function authUser($connect, $email, $password)
 {
@@ -21,6 +33,38 @@ function authUser($connect, $email, $password)
 	$row = $result->fetch_assoc();
 
 	return $row;
+}
+
+
+function userList($connect, $sql)
+{
+	$result = $connect->query($sql);
+	return $result;
+
+	while ($row = $result->fetch_assoc()) {
+		var_dump($row);
+	}
+	return $rows;
+}
+
+function pagination($page, $total_pages)
+{
+	$pagination = '';
+    if ($page == 1) {
+    	$pagination .= '<a href="javascript:void(0)">Previous</a> ';
+    } else {
+    	$pagination .= '<a href="user.php?page=' . ($page--) . '">Previous/a> ';
+    }
+
+    $pagination .= $page . ' of ' . $total_pages;
+
+    if ($page == $total_pages) {
+    	$pagination .= ' <a href="javascript:void(0)">Next</a>';
+    } else {
+    	$pagination .= ' <a href="user.php?page=' . ($page++) . '">Next</a>';
+    }
+
+    return $pagination;
 }
 
 
