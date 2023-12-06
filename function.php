@@ -131,4 +131,37 @@ function deleteUser($connect, $userId) {
 	}
 	$stmt->close();
 }
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+	insertDonation($connect,
+		$_POST['username'],
+		$_POST['description'],
+		$_POST['phone'],
+		$_POST['email'],
+		$_POST['donationType'],
+		$_POST['status'],
+		$_FILES['image'],
+	);
+}
+
+function insertDonation($connect, $username, $description, $phone, $email, $donationType, $status, $image) {
+	
+	$target_dir = "uploads/";
+    $target_file = $target_dir . basename($image["name"]);
+    move_uploaded_file($image["tmp_name"], $target_file);
+
+	$sql = "INSERT INTO donations (username, description, phone, email, donationType, status, image)
+	VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+	$stmt = $connect->prepare($sql);
+	$stmt->bind_param("sssssss",  $username, $description, $phone, $email, $donationType, $status, $target_file);
+
+	if($stmt->execute()) {
+		header('location: donation.php');
+		echo "<script>alert('Donation Added Successfully')</script>";
+	} else {
+		echo "Error: " . $stmt->error();
+	}
+}
+
 ?>

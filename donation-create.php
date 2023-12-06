@@ -25,33 +25,33 @@ $show = isset($_GET['load']) && $_GET['load'] != '' ? $_GET['load'] : '';
             <h2 style="color: #fff;">Add Record</h2>
         </div>
         <div class="formWrapper">
-        <form action="#" method="post" class="custom-form">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" required>
+            <form action="function.php" method="POST" class="custom-form" enctype="">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
 
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" rows="4" required></textarea>
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
 
-            <label for="phone">Phone:</label>
-            <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+                <label for="phone">Phone:</label>
+                <input type="tel" id="phone" name="phone"  required>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
 
-            <label for="donationType">Donation Type:</label>
-            <select id="donationType" name="donationType" required>
-                <option value="monetary">Monetary</option>
-                <option value="goods">Goods</option>
-            </select>
+                <label for="donationType">Donation Type:</label>
+                <select id="donationType" name="donationType" required>
+                    <option value="monetary">Monetary</option>
+                    <option value="goods">Goods</option>
+                </select>
 
-            <label for="status">Status:</label>
-            <input type="text" id="status" name="status" required>
+                <label for="status">Status:</label>
+                <input type="text" id="status" name="status" required>
 
-            <label for="image">Image:</label>
-            <input type="file" id="image" name="image" accept="image/*">
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image" accept="image/*">
 
-            <button type="submit">Submit</button>
-        </form>
+                <button type="submit">Submit</button>
+            </form>
         </div>
     </div>
     <?php
