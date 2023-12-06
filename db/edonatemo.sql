@@ -157,6 +157,17 @@ CREATE TABLE IF NOT EXISTS `posts` (
 -- Dumping data for table edonatemo.posts: ~0 rows (approximately)
 DELETE FROM `posts`;
 
+CREATE TABLE donations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    phone VARCHAR(10) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    donationType VARCHAR(255) NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    image VARCHAR(255) NOT NULL
+);
+
 -- Dumping structure for table edonatemo.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
