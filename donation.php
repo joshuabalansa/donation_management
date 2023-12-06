@@ -22,7 +22,7 @@ require "db-connect.php";
         <div class="wrapper">
             <div class="titleBar">
                 <h2 style="color: #fff;">Donation Information</h2>
-                <a class="addBtn" href="javascript:void(0)" >Manually Add a Record</a>
+                <a class="addBtn" href="donation-create.php" >Manually Add a Record</a>
             </div>
             <table>
                 <thead>
@@ -52,6 +52,7 @@ require "db-connect.php";
 
             </table>
         </div>
+        
         <?php 
         include 'footer.php';
         ?>

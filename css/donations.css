@@ -114,17 +114,17 @@ input[type="submit"]:hover{
 
     /* background:hsl(220, 61%, 48%); */
     padding: 8px;
-    color:white;
+    color:white !important;
     font-size: 1.2rem;
     border-radius:50px;
+    border: 1px solid white;
     transition:0.3s;    
     cursor:pointer;
 }
 .addBtn:hover{
     transition:0.3s;
     border: 1px solid white;
-    color:white;
-    border-radius:50px;
+    color: #fff;
     cursor:pointer;
 }
 

@@ -126,7 +126,8 @@ function deleteUser($connect, $userId) {
 		header('location: user.php');
 		exit();
 	} else {
-		echo "Error Deleting user" . $stmt->error;
+		header('location: user.php');
+		echo "<script>alert('$stmt->error')</script>";
 	}
 	$stmt->close();
 }
