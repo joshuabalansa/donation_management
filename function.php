@@ -1,4 +1,5 @@
 <?php
+include 'db-connect.php';
 
 function returnJson($data)
 {
@@ -77,17 +78,17 @@ function pagination($page, $total_pages, $search)
 	$search_str = ($search != '')? '&search=' . $search : '';
 	$pagination = '';
     if ($page <= 1) {
-    	$pagination .= '<a href="javascript:void(0)">Previous</a> ';
+    	$pagination .= '<a style="color: #fff;" href="javascript:void(0)">Previous</a> ';
     } else {
-    	$pagination .= '<a href="user.php?page=' . ($page-1) . '' . $search_str . '">Previous</a> ';
+    	$pagination .= '<a style="color: #fff;" href="user.php?page=' . ($page-1) . '' . $search_str . '">Previous</a> ';
     }
 
-    $pagination .= $page . ' of ' . $total_pages;
+    $pagination .= "<span style='color: #fff'>" . $page . ' of ' . $total_pages . "</span>";
 
     if ($page >= $total_pages) {
-    	$pagination .= ' <a href="javascript:void(0)">Next</a>';
+    	$pagination .= ' <a style="color: #fff;" href="javascript:void(0)">Next</a>';
     } else {
-    	$pagination .= ' <a href="user.php?page=' . ($page+1) . '' . $search_str . '">Next</a>';
+    	$pagination .= ' <a style="color: #fff;" href="user.php?page=' . ($page+1) . '' . $search_str . '">Next</a>';
     }
 
     return $pagination;
@@ -107,5 +108,26 @@ function dump($object)
 	echo '<pre>';
 	var_dump($object);
 	echo '<pre>';
+}
+
+/**
+ * User Delete
+ */
+if (isset($_GET['userDelete'])) {
+    deleteUser($connect, $_GET['userDelete']);
+}
+
+function deleteUser($connect, $userId) {
+
+	$stmt = $connect->prepare('DELETE FROM users WHERE id = ?');
+	$stmt->bind_param("i", $userId);
+
+	if($stmt->execute()) {
+		header('location: user.php');
+		exit();
+	} else {
+		echo "Error Deleting user" . $stmt->error;
+	}
+	$stmt->close();
 }
 ?>

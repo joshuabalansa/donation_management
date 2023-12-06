@@ -60,15 +60,14 @@ $total_pages = ceil($total_rows / $limit)
 						<td><?=$row['email'] ?></td>
 						<td><?=$row['contact'] ?></td>
 						<td>
-							<a class="actionBtn" href="#">Edit</a>
-							<a class="actionBtn" href="#">Delete</a>
+							<a class="actionBtn" href="javascript:void(0)">Edit</a>
+							<a class="actionBtn" href="function.php?userDelete=<?=$row['id'] ?>">Delete</a>
 						</td>
 					</tr>
 		    		<?php endwhile; ?>
 		    	</tbody>
 		    </table>
-		    <?php echo pagination($page, $total_pages, $search); ?>
-		    
+		    <?=pagination($page, $total_pages, $search); ?>
         </div>
         <?php 
         include 'footer.php';
