@@ -41,6 +41,7 @@ th {
     margin-right: 10px;
 }
 
-a {
+.actionBtn {
     color: white;
+    font-size: 16px;
 }

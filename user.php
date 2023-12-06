@@ -64,8 +64,8 @@ $total_pages = ceil($total_rows / $limit)
 						<td><?=$row['email'] ?></td>
 						<td><?=$row['contact'] ?></td>
 						<td>
-							<a href="#">Edit</a>
-							<a href="#">Delete</a>
+							<a class="actionBtn" href="#">Edit</a>
+							<a class="actionBtn" href="#">Delete</a>
 						</td>
 					</tr>
 		    		<?php endwhile; ?>
