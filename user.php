@@ -33,6 +33,8 @@ $total_pages = ceil($total_rows / $limit)
     <head>
         <title>User | E - Donate Mo</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">	
+        <link rel="stylesheet" type="text/css" href="css/user.css">	
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     </head>
 
     <body>
@@ -41,27 +43,32 @@ $total_pages = ceil($total_rows / $limit)
         ?>
         <div class="wrapper">
             
-		    <form action="user.php" method="post">
-		    	<input type="text" name="search" value="<?php echo $search; ?>">
+		    <form class="searchBarContainer" action="user.php" method="post">
+		    	<input class="searchbar" type="text" name="search" placeholder="Search users..."> 
+				<input class="searchBtn" type="submit" value="Search">
 		    </form>
 		    <table width="100%">
 		    	<thead>
 		    		<tr>
-		    			<th width="10%">Action</th>
-		    			<th width="40%">Name</th>
-		    			<th width="25%">Email</th>
-		    			<th width="25%">Contact</th>
+						<th>Name</th>
+		    			<th>Email</th>
+		    			<th>Contact</th>
+		    			<th>Action</th>
 		    		</tr>
 		    	</thead>
 		    	<tbody>
 		    		<?php
-		    		while ($row = $result->fetch_assoc()) {
-		    			echo '<tr><td></td>';
-		    			echo '<td>' . $row['name'] . '</td>';
-		    			echo '<td>' . $row['email'] . '</td>';
-		    			echo '<td>' . $row['contact'] . '<td></tr>';
-		    		}
-		    		?>
+		    		while ($row = $result->fetch_assoc()): ?>
+					<tr>
+						<td><?=$row['name'] ?></td>
+						<td><?=$row['email'] ?></td>
+						<td><?=$row['contact'] ?></td>
+						<td>
+							<a href="#">Edit</a>
+							<a href="#">Delete</a>
+						</td>
+					</tr>
+		    		<?php endwhile; ?>
 		    	</tbody>
 		    </table>
 		    <?php
@@ -84,7 +91,6 @@ $total_pages = ceil($total_rows / $limit)
         </div>
         <?php 
         include 'footer.php';
-
 			$connect->close();
         ?>
     </body>

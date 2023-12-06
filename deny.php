@@ -1,8 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "edonatemo_web";
+include 'db-connect.php';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 

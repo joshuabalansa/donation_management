@@ -10,7 +10,7 @@ require "db-connect.php";
     <head>
         <title>Donation | E - Donate Mo</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">	
-        <link rel="stylesheet" href="donations.css">
+        <link rel="stylesheet" href="css/donations.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -21,9 +21,10 @@ require "db-connect.php";
         ?>
         <div class="wrapper">
             
-            <h2>Donation Information</h2>
+            <h2 style="color: #fff;">Donation Information</h2>
             <button onclick="openModal()">Manually Add a Record</button>
             <table>
+                <thead>
                 <tr>
                     <th>Username</th>
                     <th>Description</th>
@@ -34,6 +35,19 @@ require "db-connect.php";
                     <th>Image</th>
                     <th>Action</th>
                 </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>test</td>
+                        <td>test</td>
+                        <td>test</td>
+                        <td>test</td>
+                        <td>test</td>
+                        <td>test</td>
+                        <td>test</td>
+                        <td>test</td>
+                    </tr>
+                </tbody>
 
             </table>
         </div>

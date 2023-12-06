@@ -1,0 +1,46 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 12px;
+    font-family: sans-serif;
+    color: #152340;
+}
+
+td {
+    color: #fff;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.searchBarContainer {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.searchBarContainer .searchbar {
+    margin: 10px;
+    /* border-radius: 10px; */
+    border: none;
+    width: 250px;
+    height: 40px;
+
+}
+.searchBarContainer .searchBtn {
+    height: 40px;
+    width: 90px;
+    cursor: pointer;
+    border: none;
+    margin-right: 10px;
+}
+
+a {
+    color: white;
+}
