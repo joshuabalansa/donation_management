@@ -92,6 +92,6 @@ $total_pages = ceil($total_rows / $limit)
         <?php 
         include 'footer.php';
 			$connect->close();
-        ?>
+        	?>
     </body>
 </html>

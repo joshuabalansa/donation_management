@@ -110,21 +110,20 @@ input[type="submit"]:hover{
     border-radius:50px;
     cursor:pointer;
 }
-button{
-    margin-left:25%;
-    background:#152340;
+.addBtn {
+
+    /* background:hsl(220, 61%, 48%); */
+    padding: 8px;
     color:white;
-    width:500px;
-    font-size:2rem;
+    font-size: 1.2rem;
     border-radius:50px;
     transition:0.3s;    
     cursor:pointer;
 }
-button:hover{
+.addBtn:hover{
     transition:0.3s;
-    background:rgb(97, 112, 141);
+    border: 1px solid white;
     color:white;
-    width:500px;
     border-radius:50px;
     cursor:pointer;
 }
@@ -136,4 +135,11 @@ button:hover{
 .denied-row{
     background-color: #a70a0a;
     color: white;
+}
+
+.titleBar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
 }
