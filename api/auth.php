@@ -19,7 +19,8 @@ if (isset($_POST['email'])) {
     }
 
     $auth = authUser($connect, $email, $password);
-
+    authUserToken($connect, $auth['id']);
+    
     if (!is_null($auth)) {
     	returnJson([
     		'user' => $auth

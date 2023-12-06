@@ -6,27 +6,23 @@ require "db-connect.php";
 
 $search = '';
 $page = (isset($_GET['page']))? $_GET['page'] : 1;
-$limit = 50;
+$limit = 2;
 $skip = ($page - 1) * $limit;
 $sql = "SELECT * FROM users ";
+$sqlCount = "SELECT COUNT(*) totalRows FROM users ";
 
-if (isset($_POST['searchUserBtn'])) {
+if (isset($_GET['search'])) {
 
-   $search = $connect->real_escape_string($_POST['search']);
-	$sql .= "WHERE name LIKE '$search%' AND email LIKE '$search%' AND contact LIKE '$search%' ";
+   $search = $connect->real_escape_string($_GET['search']);
+	$sql .= "WHERE name LIKE '$search%' OR email LIKE '$search%' OR contact LIKE '$search%' ";
+	$sqlCount .= "WHERE name LIKE '$search%' OR email LIKE '$search%' OR contact LIKE '$search%' ";
 
 }
 
 $sql .= "LIMIT $skip, $limit";
 
-if ($page <= 1) {
-
-} else {
-
-}
-
 $result = userList($connect, $sql);
-$total_rows = $result->num_rows;
+$total_rows = totalRows($connect, $sqlCount);
 $total_pages = ceil($total_rows / $limit)
 ?> 
 <html>
@@ -43,8 +39,8 @@ $total_pages = ceil($total_rows / $limit)
         ?>
         <div class="wrapper">
             
-		    <form class="searchBarContainer" action="user.php" method="post">
-		    	<input class="searchbar" type="text" name="search" placeholder="Search users..."> 
+		    <form class="searchBarContainer" action="user.php" method="get">
+		    	<input class="searchbar" type="text" name="search" placeholder="Search users..." value="<?php echo $search; ?>"> 
 				<input class="searchBtn" type="submit" value="Search">
 		    </form>
 		    <table width="100%">
@@ -71,22 +67,7 @@ $total_pages = ceil($total_rows / $limit)
 		    		<?php endwhile; ?>
 		    	</tbody>
 		    </table>
-		    <?php
-		    echo pagination($page, $total_pages);
-		    /*if ($page == 1) {
-		    	echo '<a href="javascript:void(0)">Previous</a> ';
-		    } else {
-		    	echo '<a href="user.php?page=' . ($page--) . '">Previous/a> ';
-		    }
-
-		    echo $page . ' of ' . $total_pages;
-
-		    if ($page == $total_pages) {
-		    	echo ' <a href="javascript:void(0)">Next</a>';
-		    } else {
-		    	echo ' <a href="user.php?page=' . ($page++) . '">Next</a>';
-		    }*/
-		    ?>
+		    <?php echo pagination($page, $total_pages, $search); ?>
 		    
         </div>
         <?php 

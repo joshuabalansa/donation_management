@@ -43,6 +43,17 @@ function authUser($connect, $email, $password)
 }
 
 
+function authUserToken($connect, $id)
+{
+	$token = md5($id);
+	$sql = "UPDATE users SET token='$token' WHERE id='$id' LIMIT 1";
+
+	$result = $connect->query($sql);
+
+	return $token;
+}
+
+
 function userList($connect, $sql)
 {
 	$result = $connect->query($sql);
@@ -54,21 +65,29 @@ function userList($connect, $sql)
 	return $rows;
 }
 
-function pagination($page, $total_pages)
+function totalRows($connect, $sql)
 {
+	$result = $connect->query($sql);
+	$row = $result->fetch_assoc();
+	return $row['totalRows'];
+}
+
+function pagination($page, $total_pages, $search)
+{
+	$search_str = ($search != '')? '&search=' . $search : '';
 	$pagination = '';
-    if ($page == 1) {
+    if ($page <= 1) {
     	$pagination .= '<a href="javascript:void(0)">Previous</a> ';
     } else {
-    	$pagination .= '<a href="user.php?page=' . ($page--) . '">Previous/a> ';
+    	$pagination .= '<a href="user.php?page=' . ($page-1) . '' . $search_str . '">Previous</a> ';
     }
 
     $pagination .= $page . ' of ' . $total_pages;
 
-    if ($page == $total_pages) {
+    if ($page >= $total_pages) {
     	$pagination .= ' <a href="javascript:void(0)">Next</a>';
     } else {
-    	$pagination .= ' <a href="user.php?page=' . ($page++) . '">Next</a>';
+    	$pagination .= ' <a href="user.php?page=' . ($page+1) . '' . $search_str . '">Next</a>';
     }
 
     return $pagination;
