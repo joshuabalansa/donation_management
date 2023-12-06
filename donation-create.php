@@ -25,7 +25,7 @@ $show = isset($_GET['load']) && $_GET['load'] != '' ? $_GET['load'] : '';
             <h2 style="color: #fff;">Add Record</h2>
         </div>
         <div class="formWrapper">
-            <form action="function.php" method="POST" class="custom-form" enctype="">
+            <form action="function.php" method="POST" class="custom-form" enctype="multipart/form-data">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
 
