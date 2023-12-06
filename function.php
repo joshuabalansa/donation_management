@@ -1,5 +1,12 @@
 <?php
 
+function returnJson($data)
+{
+	header("Content-Type: application/json");
+	echo json_encode($data);
+	exit();
+}
+
 function check_user_email($connect, $email)
 {
 	$sql = "SELECT id FROM users WHERE email='$email'";
