@@ -29,7 +29,7 @@ if (isset($_POST['loginBtn'])) {
         $_SESSION['user'] = $auth;
         header('Location: main.php');
     } else {
-        $error['email'] = 'Invalid Email and Password!';
+        $error['email'] = 'Invalid email or password!';
     }
 }
 ?>
@@ -48,13 +48,14 @@ if (isset($_POST['loginBtn'])) {
     </header>
     <h2>Admin Login</h2>
     <form action="index.php" method="post">
-        <label for="email">Email: <?php echo (isset($error['email']))? $error['email'] : '';?></label>
+        <label for="email">Email:</label>
         <input type="text" id="email" name="email" ><br>
 
         <label for="password">Password: <?php echo (isset($error['password']))? $error['password'] : '';?></label>
         <input type="password" id="password" name="password" ><br>
 
         <input type="submit" value="Login" name="loginBtn">
+        <?php echo (isset($error['email'])) ? $error['email'] : '';?>
     </form>
 </body>
 </html>
