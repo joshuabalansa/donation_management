@@ -5,6 +5,9 @@ include "function.php";
 require "db-connect.php";
 
     $show = (isset($_GET['load']) && $_GET['load'] !='') ? $_GET['load'] : '';
+
+    $sql = "SELECT * FROM donations";
+    $results = $connect->query($sql);
 ?> 
 <html>
     <head>
@@ -33,21 +36,24 @@ require "db-connect.php";
                     <th>Email</th>
                     <th>Donation Type</th>
                     <th>Status</th>
-                    <th>Image</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
+                    <?php while($row = $results->fetch_assoc()): ?>
                     <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
+                        <td><?=$row['username']; ?></td>
+                        <td><?=$row['description']?></td>
+                        <td><?=$row['phone']?></td>
+                        <td><?=$row['email']?></td>
+                        <td><?=$row['donationType']?></td>
+                        <td><?=$row['status']?></td>
+                        <td colspan="2">
+                        <a  style="font-size: 16px;color: #fff;" href="javascript:void(0)">Edit</a>
+                        <a  style="font-size: 16px;color: #fff;" href="javascript:void(0)">Delete</a>
+                        </td>
                     </tr>
+                    <?php endwhile; ?>
                 </tbody>
 
             </table>

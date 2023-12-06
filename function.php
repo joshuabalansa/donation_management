@@ -126,8 +126,8 @@ function deleteUser($connect, $userId) {
 		header('location: user.php');
 		exit();
 	} else {
-		header('location: user.php');
-		echo "<script>alert('$stmt->error')</script>";
+		
+		echo "Opps! Something went wrong, ".$stmt->error;
 	}
 	$stmt->close();
 }
@@ -158,10 +158,8 @@ function insertDonation($connect, $username, $description, $phone, $email, $dona
 
 	if($stmt->execute()) {
 		header('location: donation.php');
-		echo "<script>alert('Donation Added Successfully')</script>";
 	} else {
-		echo "Error: " . $stmt->error();
+		echo "Opps! Something went wrong," . $stmt->error();
 	}
 }
-
 ?>
