@@ -1,4 +1,5 @@
-
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 <div class="header">
     <div class="edonatemo"><h1>E - DONATE MO | Admin page</h1></div>
     <div class="main">

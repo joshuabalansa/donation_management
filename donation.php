@@ -49,8 +49,9 @@ require "db-connect.php";
                         <td><?=$row['donationType']?></td>
                         <td><?=$row['status']?></td>
                         <td colspan="2">
-                        <a  style="font-size: 16px;color: #fff;" href="javascript:void(0)">Edit</a>
-                        <a  style="font-size: 16px;color: #fff;" href="javascript:void(0)">Delete</a>
+                        <a  style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-list-ul'></i></a>
+                        <a  style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-edit-alt'></i></a>
+                        <a  style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-trash-alt'></i></a>
                         </td>
                     </tr>
                     <?php endwhile; ?>

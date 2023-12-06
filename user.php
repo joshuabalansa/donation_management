@@ -43,7 +43,7 @@ $total_pages = ceil($total_rows / $limit)
 		    	<input class="searchbar" type="text" name="search" placeholder="Search users..." value="<?php echo $search; ?>"> 
 				<input class="searchBtn" type="submit" value="Search">
 		    </form>
-		    <table width="100%">
+		    <table style="margin-bottom: 20px;" width="100%">
 		    	<thead>
 		    		<tr>
 						<th>Name</th>
@@ -60,14 +60,16 @@ $total_pages = ceil($total_rows / $limit)
 						<td><?=$row['email'] ?></td>
 						<td><?=$row['contact'] ?></td>
 						<td>
-							<a class="actionBtn" href="javascript:void(0)">Edit</a>
-							<a class="actionBtn" href="function.php?userDelete=<?=$row['id'] ?>">Delete</a>
+							<a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)"><i class='bx bx-edit-alt'></i></a>
+							<a style="font-size: 20px;color: #fff;" class="actionBtn" href="function.php?userDelete=<?=$row['id'] ?>"><i class='bx bx-trash-alt'></i></a>
 						</td>
 					</tr>
 		    		<?php endwhile; ?>
 		    	</tbody>
 		    </table>
-		    <?=pagination($page, $total_pages, $search); ?>
+			<center>
+		    	<?=pagination($page, $total_pages, $search); ?>
+			</center>
         </div>
         <?php 
         include 'footer.php';
