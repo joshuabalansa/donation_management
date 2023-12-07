@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif !important;
+}
 body {
     background-color: #152340;
     margin-bottom: 0px;
@@ -16,7 +22,6 @@ body {
     cursor: pointer;
     font-size: 25px;
     color: white;
-    font-family: 'Work Sans', sans-serif;
 }
 .main{
     width: 100%;
@@ -83,10 +88,10 @@ li, a, .start{
     width: 80%;
     height: 100vh;
     margin: auto;
-    border: 1px solid white;
+    /* border: 1px solid white; */
     padding: 10px;
     background-color: rgb (255, 255, 255);
-    margin-bottom: 30px;
+    margin-bottom: 90px;
 }
 
   .footer {

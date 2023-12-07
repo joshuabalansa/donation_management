@@ -43,7 +43,7 @@ $total_pages 	= 	ceil($total_rows / $limit)
             
 		    <form class="searchBarContainer" action="user.php" method="get">
 		    	<input class="searchbar" type="text" name="search" placeholder="Search users..." value="<?php echo $search; ?>"> 
-				<input class="searchBtn" type="submit" value="Search">
+				<button class="searchBtn" type="submit"><i class='bx bx-search-alt-2' ></i></button>
 		    </form>
 		    <table style="margin-bottom: 20px;" width="100%">
 		    	<thead>

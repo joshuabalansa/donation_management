@@ -30,13 +30,15 @@ th {
     /* border-radius: 10px; */
     border: none;
     width: 250px;
-    height: 40px;
+    height: 35px;
+    margin-right: 0;
 
 }
 .searchBarContainer .searchBtn {
-    height: 40px;
-    width: 90px;
+    height: 35px;
+    width: 60px;
     cursor: pointer;
+    font-size: 30px;
     border: none;
     margin-right: 10px;
 }
