@@ -5,6 +5,21 @@ include 'function.php';
 require 'db-connect.php';
 
 $show = isset($_GET['load']) && $_GET['load'] != '' ? $_GET['load'] : '';
+
+
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    insertDonation($connect,
+        $username       =   isset($_POST['username'])      ?    $_POST['username']      : '',
+        $description    =   isset($_POST['description'])   ?    $_POST['description']   : '',
+        $phone          =   isset($_POST['phone'])         ?    $_POST['phone']         : '',
+        $email          =   isset($_POST['email'])         ?    $_POST['email']         : '',
+        $donationType   =   isset($_POST['donationType'])  ?    $_POST['donationType']  : '',
+        $status         =   isset($_POST['status'])        ?    $_POST['status']        : '',
+        $image          =   isset($_FILES['image'])        ?    $_FILES['image']        : [],
+    );
+}
+
 ?>
 <html>
 
@@ -25,7 +40,7 @@ $show = isset($_GET['load']) && $_GET['load'] != '' ? $_GET['load'] : '';
             <h2 style="color: #fff;">Add Record</h2>
         </div>
         <div class="formWrapper">
-            <form action="function.php" method="POST" class="custom-form" enctype="multipart/form-data">
+            <form action="<?=$_SERVER['PHP_SELF'] ?>" method="POST" class="custom-form" enctype="multipart/form-data">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>
 
@@ -33,7 +48,7 @@ $show = isset($_GET['load']) && $_GET['load'] != '' ? $_GET['load'] : '';
                 <textarea id="description" name="description" rows="4" required></textarea>
 
                 <label for="phone">Phone:</label>
-                <input type="tel" id="phone" name="phone"  required>
+                <input type="number" id="phone" name="phone" maxlength="11" required>
 
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>

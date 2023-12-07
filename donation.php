@@ -8,6 +8,7 @@ require "db-connect.php";
 
     $sql = "SELECT * FROM donations";
     $results = $connect->query($sql);
+
 ?> 
 <html>
     <head>

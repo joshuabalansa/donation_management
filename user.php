@@ -4,39 +4,41 @@ include "check-session.php";
 include "function.php";
 require "db-connect.php";
 
-$search = '';
-$page = (isset($_GET['page']))? $_GET['page'] : 1;
-$limit = 2;
-$skip = ($page - 1) * $limit;
-$sql = "SELECT * FROM users ";
-$sqlCount = "SELECT COUNT(*) totalRows FROM users ";
+$search 	= 	'';
+$page 		= 	(isset($_GET['page']))? $_GET['page'] : 1;
+$limit 		= 	2;
+$skip 		= 	($page - 1) * $limit;
+$sql 		= 	"SELECT * FROM users ";
+$sqlCount 	= 	"SELECT COUNT(*) totalRows FROM users ";
 
 if (isset($_GET['search'])) {
 
-   $search = $connect->real_escape_string($_GET['search']);
-	$sql .= "WHERE name LIKE '$search%' OR email LIKE '$search%' OR contact LIKE '$search%' ";
-	$sqlCount .= "WHERE name LIKE '$search%' OR email LIKE '$search%' OR contact LIKE '$search%' ";
+   $search 		 = $connect->real_escape_string($_GET['search']);
+	$sql 		.= "WHERE name LIKE '$search%' OR email LIKE '$search%' OR contact LIKE '$search%' ";
+	$sqlCount 	.= "WHERE name LIKE '$search%' OR email LIKE '$search%' OR contact LIKE '$search%' ";
+}
 
+if (isset($_GET['userDelete'])) {
+    deleteUser($connect, $_GET['userDelete']);
 }
 
 $sql .= "LIMIT $skip, $limit";
 
-$result = userList($connect, $sql);
-$total_rows = totalRows($connect, $sqlCount);
-$total_pages = ceil($total_rows / $limit)
+$result 		= 	userList($connect, $sql);
+$total_rows		= 	totalRows($connect, $sqlCount);
+$total_pages 	= 	ceil($total_rows / $limit)
 ?> 
 <html>
     <head>
         <title>User | E - Donate Mo</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">	
         <link rel="stylesheet" type="text/css" href="css/user.css">	
-		<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
-    <body>
-        <?php 
-        include 'header.php';
-        ?>
+    <body> 
+        <?php include 'header.php'; ?>
+       
         <div class="wrapper">
             
 		    <form class="searchBarContainer" action="user.php" method="get">
@@ -61,7 +63,7 @@ $total_pages = ceil($total_rows / $limit)
 						<td><?=$row['contact'] ?></td>
 						<td>
 							<a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)"><i class='bx bx-edit-alt'></i></a>
-							<a style="font-size: 20px;color: #fff;" class="actionBtn" href="function.php?userDelete=<?=$row['id'] ?>"><i class='bx bx-trash-alt'></i></a>
+							<a style="font-size: 20px;color: #fff;" class="actionBtn" href="user.php?userDelete=<?=$row['id'] ?>"><i class='bx bx-trash-alt'></i></a>
 						</td>
 					</tr>
 		    		<?php endwhile; ?>

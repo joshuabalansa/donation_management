@@ -161,7 +161,7 @@ CREATE TABLE donations (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
-    phone VARCHAR(10) NOT NULL,
+    phone VARCHAR(11) NOT NULL,
     email VARCHAR(255) NOT NULL,
     donationType VARCHAR(255) NOT NULL,
     status VARCHAR(255) NOT NULL,

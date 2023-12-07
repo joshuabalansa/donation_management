@@ -110,56 +110,45 @@ function dump($object)
 	echo '<pre>';
 }
 
-/**
- * User Delete
- */
-if (isset($_GET['userDelete'])) {
-    deleteUser($connect, $_GET['userDelete']);
-}
-
 function deleteUser($connect, $userId) {
 
-	$stmt = $connect->prepare('DELETE FROM users WHERE id = ?');
-	$stmt->bind_param("i", $userId);
+	try {
+		$stmt = $connect->prepare('DELETE FROM users WHERE id = ?');
+		$stmt->bind_param("i", $userId);
 
-	if($stmt->execute()) {
-		header('location: user.php');
-		exit();
-	} else {
-		
-		echo "Opps! Something went wrong, ".$stmt->error;
+		if($stmt->execute()) {
+			header('location: user.php');
+			exit();
+		} else {
+			
+			echo "Opps! Something went wrong, ".$stmt->error;
+		}
+		$stmt->close();
+	} catch(Exception $e) {
+		echo "Caught exception" . $e->getMessage();
 	}
-	$stmt->close();
-}
-
-if($_SERVER["REQUEST_METHOD"] == "POST") {
-	insertDonation($connect,
-		$_POST['username'],
-		$_POST['description'],
-		$_POST['phone'],
-		$_POST['email'],
-		$_POST['donationType'],
-		$_POST['status'],
-		$_FILES['image'],
-	);
 }
 
 function insertDonation($connect, $username, $description, $phone, $email, $donationType, $status, $image) {
 	
 	$target_dir = "uploads/";
     $target_file = $target_dir . basename($image["name"]);
-    move_uploaded_file($image["tmp_name"], $target_file);
+    move_uploaded_file($image["tmp_name"], $target_file); 
 
-	$sql = "INSERT INTO donations (username, description, phone, email, donationType, status, image)
-	VALUES (?, ?, ?, ?, ?, ?, ?)";
+	try {
+		$sql = "INSERT INTO donations (username, description, phone, email, donationType, status, image)
+		VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-	$stmt = $connect->prepare($sql);
-	$stmt->bind_param("sssssss",  $username, $description, $phone, $email, $donationType, $status, $target_file);
+		$stmt = $connect->prepare($sql);
+		$stmt->bind_param("sssssss",  $username, $description, $phone, $email, $donationType, $status, $target_file);
 
-	if($stmt->execute()) {
-		header('location: donation.php');
-	} else {
-		echo "Opps! Something went wrong," . $stmt->error();
+		if($stmt->execute()) {
+			header('location: donation.php');
+		} else {
+			echo "Opps! Something went wrong," . $stmt->error();
+		}
+	} catch(Exception $e) {
+		echo "Caught exception" . $e->getMessage();
 	}
 }
 ?>
