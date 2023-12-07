@@ -63,7 +63,7 @@ $total_pages 	= 	ceil($total_rows / $limit)
 						<td><?=$row['contact'] ?></td>
 						<td>
 							<a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)"><i class='bx bx-edit-alt'></i></a>
-							<a style="font-size: 20px;color: #fff;" class="actionBtn" href="user.php?userDelete=<?=$row['id'] ?>"><i class='bx bx-trash-alt'></i></a>
+							<a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)" onclick="confirmDelete(<?=$row['id']?>)"><i class='bx bx-trash-alt'></i></a>
 						</td>
 					</tr>
 		    		<?php endwhile; ?>
@@ -73,9 +73,18 @@ $total_pages 	= 	ceil($total_rows / $limit)
 		    	<?=pagination($page, $total_pages, $search); ?>
 			</center>
         </div>
+		<script>
+			function confirmDelete(userId) {
+				var confirmation = confirm("Are you sure you want to delete this user?")
+
+				if(confirmation) {
+					window.location.href = "user.php?userDelete=" + userId
+				}
+			}
+		</script>
         <?php 
         include 'footer.php';
 			$connect->close();
-        	?>
+        ?>
     </body>
 </html>

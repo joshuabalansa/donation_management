@@ -49,25 +49,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="formWrapper">
             <form action="<?=$_SERVER['PHP_SELF'] ?>" method="POST" class="custom-form" enctype="multipart/form-data">
                 <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+                <input placeholder="Enter username" type="text" id="username" name="username" required>
 
                 <label for="description">Description:</label>
-                <textarea id="description" name="description" rows="4" required></textarea>
+                <textarea placeholder="Enter Description" id="description" name="description" rows="4" required></textarea>
 
                 <label for="phone">Phone:</label>
-                <input type="number" id="phone" name="phone" maxlength="11" required>
+                <input placeholder="Enter phone or tel number" type="number" id="phone" name="phone" maxlength="11" required>
 
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input placeholder="Enter email address" type="email" id="email" name="email" required>
 
                 <label for="donationType">Donation Type:</label>
                 <select id="donationType" name="donationType" required>
+                    <option value="">Select Type</option>
                     <option value="monetary">Monetary</option>
                     <option value="goods">Goods</option>
                 </select>
 
                 <label for="status">Status:</label>
-                <input type="text" id="status" name="status" required>
+                <input placeholder="Enter status" type="text" id="status" name="status">
 
                 <label for="image">Image:</label>
                 <input type="file" id="image" name="image" accept="image/*">

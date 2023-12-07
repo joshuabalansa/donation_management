@@ -172,6 +172,22 @@ function getDonationById($connect, $id) {
     return $donation;
 }
 
+function deleteDonationById($connect, $id) {
+	try {
+		$sql = "DELETE FROM donations WHERE id = ?";
+		$stmt = $connect->prepare($sql);
+		$stmt->bind_param('i', $id);
+
+		if($stmt->execute()) {
+			header('location: donation.php');
+		} else {
+			echo "Opps! Something went wrong" .  $stmt->error();
+		}
+	} catch(Exception $e) {
+		echo "Caught exception" . $e->getMessage();
+	}
+}
+
 
 function updateDonationRecord($connect, $data) {
 

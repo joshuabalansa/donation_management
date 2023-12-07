@@ -8,7 +8,11 @@ require "db-connect.php";
 
     $sql = "SELECT * FROM donations";
     $results = $connect->query($sql);
-
+    
+    if(isset($_GET['donationDelete'])) {
+        $id = $_GET['donationDelete'];
+        deleteDonationById($connect, $id);
+    }
 ?>
 <html>
     <head>
@@ -50,19 +54,29 @@ require "db-connect.php";
                         <td><?=$row['donationType']?></td>
                         <td><?=$row['status']?></td>
                         <td colspan="2">
-                        <a  style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-list-ul'></i></a>
-                        <a  style="font-size: 20px;color: #fff;" href="donation-edit.php?donationEdit=<?=$row['id']?>"><i class='bx bx-edit-alt'></i></a>
-                        <a  style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-trash-alt'></i></a>
+                        <a title="View donation" style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-list-ul'></i></a>
+                        <a title="Edit donation" style="font-size: 20px;color: #fff;" href="donation-edit.php?donationEdit=<?=$row['id']?>"><i class='bx bx-edit-alt'></i></a>
+                        <a title="Delete donation" style="font-size: 20px;color: #fff;" href="#" onclick="confirmDelete(<?=$row['id']?>)">
+                            <i class='bx bx-trash-alt'></i>
+                        </a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
                 </tbody>
-
             </table>
         </div>
+        <script>
+            function confirmDelete(donationId) {
+                 var confirmation = confirm("Are you sure you want to delete?")
 
+                 if (confirmation) {
+                    window.location.href = "donation.php?donationDelete=" + donationId
+                 }
+            }
+        </script>
         <?php
-        include 'footer.php';
+            include 'footer.php';
+            $connect->close();
         ?>
     </body>
 </html>
