@@ -106,7 +106,7 @@ function logoutUser()
 function dump($object)
 {
 	echo '<pre>';
-	var_dump($object);
+	print_r($object);
 	echo '<pre>';
 }
 
@@ -120,7 +120,7 @@ function deleteUser($connect, $userId) {
 			header('location: user.php');
 			exit();
 		} else {
-			
+
 			echo "Opps! Something went wrong, ".$stmt->error;
 		}
 		$stmt->close();
@@ -130,10 +130,11 @@ function deleteUser($connect, $userId) {
 }
 
 function insertDonation($connect, $username, $description, $phone, $email, $donationType, $status, $image) {
-	
+
 	$target_dir = "uploads/";
     $target_file = $target_dir . basename($image["name"]);
-    move_uploaded_file($image["tmp_name"], $target_file); 
+
+    move_uploaded_file($image["tmp_name"], $target_file);
 
 	try {
 		$sql = "INSERT INTO donations (username, description, phone, email, donationType, status, image)
@@ -149,6 +150,57 @@ function insertDonation($connect, $username, $description, $phone, $email, $dona
 		}
 	} catch(Exception $e) {
 		echo "Caught exception" . $e->getMessage();
+	}
+}
+
+function getDonationById($connect, $id) {
+    $sql = "SELECT * FROM donations WHERE id = ?";
+    $stmt = $connect->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $donation = $result->fetch_assoc();
+    } else {
+        $donation = [];
+    }
+
+    $stmt->close();
+
+    return $donation;
+}
+
+
+function updateDonationRecord($connect, $data) {
+
+	$id = isset($data['id']) ? $data['id'] : '';
+	$username = isset($data['username']) ? $data['username'] : '';
+	$description = isset($data['description']) ? $data['description'] : '';
+	$phone = isset($data['phone']) ? $data['phone'] : '';
+	$email = isset($data['email']) ? $data['email'] : '';
+	$donationType = isset($data['donationType']) ? $data['donationType'] : '';
+	$status = isset($data['status']) ? $data['status'] : '';
+
+	try {
+
+		$sql = "UPDATE donations SET username = ?, description = ?, phone = ?, email = ?, donationType = ?, status = ? WHERE id = ?";
+		$stmt = $connect->prepare($sql);
+		$stmt->bind_param('ssssssi', $username, $description, $phone, $email, $donationType, $status, $id);
+
+		if ($stmt->execute()) {
+
+			header('location: donation.php');
+		} else {
+
+			echo "Opps! Something went wrong" . $stmt->error();
+		}
+		$stmt->close();
+		$connect->close();
+
+	} catch(Exception $e) {
+		echo "Caught exception: " . $e->getMessage();
 	}
 }
 ?>

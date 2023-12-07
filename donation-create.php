@@ -9,17 +9,24 @@ $show = isset($_GET['load']) && $_GET['load'] != '' ? $_GET['load'] : '';
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    $username       =   isset($_POST['username'])      ?    $_POST['username']      : '';
+    $description    =   isset($_POST['description'])   ?    $_POST['description']   : '';
+    $phone          =   isset($_POST['phone'])         ?    $_POST['phone']         : '';
+    $email          =   isset($_POST['email'])         ?    $_POST['email']         : '';
+    $donationType   =   isset($_POST['donationType'])  ?    $_POST['donationType']  : '';
+    $status         =   isset($_POST['status'])        ?    $_POST['status']        : '';
+    $image          =   isset($_FILES['image'])        ?    $_FILES['image']        : [];
+
     insertDonation($connect,
-        $username       =   isset($_POST['username'])      ?    $_POST['username']      : '',
-        $description    =   isset($_POST['description'])   ?    $_POST['description']   : '',
-        $phone          =   isset($_POST['phone'])         ?    $_POST['phone']         : '',
-        $email          =   isset($_POST['email'])         ?    $_POST['email']         : '',
-        $donationType   =   isset($_POST['donationType'])  ?    $_POST['donationType']  : '',
-        $status         =   isset($_POST['status'])        ?    $_POST['status']        : '',
-        $image          =   isset($_FILES['image'])        ?    $_FILES['image']        : [],
+        $username,
+        $description,
+        $phone,
+        $email,
+        $donationType,
+        $status,
+        $image,
     );
 }
-
 ?>
 <html>
 
@@ -72,7 +79,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php
     include 'footer.php';
     ?>
-    
+
 </body>
 
 </html>

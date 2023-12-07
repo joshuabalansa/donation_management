@@ -9,18 +9,18 @@ require "db-connect.php";
     $sql = "SELECT * FROM donations";
     $results = $connect->query($sql);
 
-?> 
+?>
 <html>
     <head>
         <title>Donation | E - Donate Mo</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">	
+        <link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" href="css/donations.css">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
 
     <body>
-        <?php 
+        <?php
         include 'header.php';
         ?>
         <div class="wrapper">
@@ -51,7 +51,7 @@ require "db-connect.php";
                         <td><?=$row['status']?></td>
                         <td colspan="2">
                         <a  style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-list-ul'></i></a>
-                        <a  style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-edit-alt'></i></a>
+                        <a  style="font-size: 20px;color: #fff;" href="donation-edit.php?donationEdit=<?=$row['id']?>"><i class='bx bx-edit-alt'></i></a>
                         <a  style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-trash-alt'></i></a>
                         </td>
                     </tr>
@@ -60,8 +60,8 @@ require "db-connect.php";
 
             </table>
         </div>
-        
-        <?php 
+
+        <?php
         include 'footer.php';
         ?>
     </body>
