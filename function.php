@@ -106,28 +106,117 @@ function logoutUser()
 function dump($object)
 {
 	echo '<pre>';
-	var_dump($object);
+	print_r($object);
 	echo '<pre>';
-}
-
-/**
- * User Delete
- */
-if (isset($_GET['userDelete'])) {
-    deleteUser($connect, $_GET['userDelete']);
 }
 
 function deleteUser($connect, $userId) {
 
-	$stmt = $connect->prepare('DELETE FROM users WHERE id = ?');
-	$stmt->bind_param("i", $userId);
+	try {
+		$stmt = $connect->prepare('DELETE FROM users WHERE id = ?');
+		$stmt->bind_param("i", $userId);
 
-	if($stmt->execute()) {
-		header('location: user.php');
-		exit();
-	} else {
-		echo "Error Deleting user" . $stmt->error;
+		if($stmt->execute()) {
+			header('location: user.php');
+			exit();
+		} else {
+
+			echo "Opps! Something went wrong, ".$stmt->error;
+		}
+		$stmt->close();
+	} catch(Exception $e) {
+		echo "Caught exception" . $e->getMessage();
 	}
-	$stmt->close();
+}
+
+function insertDonation($connect, $username, $description, $phone, $email, $donationType, $status, $image) {
+
+	$target_dir = "uploads/";
+    $target_file = $target_dir . basename($image["name"]);
+
+    move_uploaded_file($image["tmp_name"], $target_file);
+
+	try {
+		$sql = "INSERT INTO donations (username, description, phone, email, donationType, status, image)
+		VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+		$stmt = $connect->prepare($sql);
+		$stmt->bind_param("sssssss",  $username, $description, $phone, $email, $donationType, $status, $target_file);
+
+		if($stmt->execute()) {
+			header('location: donation.php');
+		} else {
+			echo "Opps! Something went wrong," . $stmt->error();
+		}
+	} catch(Exception $e) {
+		echo "Caught exception" . $e->getMessage();
+	}
+}
+
+function getDonationById($connect, $id) {
+    $sql = "SELECT * FROM donations WHERE id = ?";
+    $stmt = $connect->prepare($sql);
+    $stmt->bind_param('i', $id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $donation = $result->fetch_assoc();
+    } else {
+        $donation = [];
+    }
+
+    $stmt->close();
+
+    return $donation;
+}
+
+function deleteDonationById($connect, $id) {
+	try {
+		$sql = "DELETE FROM donations WHERE id = ?";
+		$stmt = $connect->prepare($sql);
+		$stmt->bind_param('i', $id);
+
+		if($stmt->execute()) {
+			header('location: donation.php');
+		} else {
+			echo "Opps! Something went wrong" .  $stmt->error();
+		}
+	} catch(Exception $e) {
+		echo "Caught exception" . $e->getMessage();
+	}
+}
+
+
+function updateDonationRecord($connect, $data) {
+
+	$id = isset($data['id']) ? $data['id'] : '';
+	$username = isset($data['username']) ? $data['username'] : '';
+	$description = isset($data['description']) ? $data['description'] : '';
+	$phone = isset($data['phone']) ? $data['phone'] : '';
+	$email = isset($data['email']) ? $data['email'] : '';
+	$donationType = isset($data['donationType']) ? $data['donationType'] : '';
+	$status = isset($data['status']) ? $data['status'] : '';
+
+	try {
+
+		$sql = "UPDATE donations SET username = ?, description = ?, phone = ?, email = ?, donationType = ?, status = ? WHERE id = ?";
+		$stmt = $connect->prepare($sql);
+		$stmt->bind_param('ssssssi', $username, $description, $phone, $email, $donationType, $status, $id);
+
+		if ($stmt->execute()) {
+
+			header('location: donation.php');
+		} else {
+
+			echo "Opps! Something went wrong" . $stmt->error();
+		}
+		$stmt->close();
+		$connect->close();
+
+	} catch(Exception $e) {
+		echo "Caught exception: " . $e->getMessage();
+	}
 }
 ?>
