@@ -129,7 +129,7 @@ function deleteUser($connect, $userId) {
 	}
 }
 
-function insertDonation($connect, $username, $description, $phone, $email, $donationType, $status, $image) {
+function insertDonation($connect, $name, $description, $phone, $email, $donationType, $donation, $image) {
 
 	$target_dir = "uploads/";
     $target_file = $target_dir . basename($image["name"]);
@@ -137,11 +137,11 @@ function insertDonation($connect, $username, $description, $phone, $email, $dona
     move_uploaded_file($image["tmp_name"], $target_file);
 
 	try {
-		$sql = "INSERT INTO donations (username, description, phone, email, donationType, status, image)
+		$sql = "INSERT INTO donations (name, description, phone, email, donationType, donation, image)
 		VALUES (?, ?, ?, ?, ?, ?, ?)";
 
 		$stmt = $connect->prepare($sql);
-		$stmt->bind_param("sssssss",  $username, $description, $phone, $email, $donationType, $status, $target_file);
+		$stmt->bind_param("sssssss",  $name, $description, $phone, $email, $donationType, $donation, $target_file);
 
 		if($stmt->execute()) {
 			header('location: donation.php');
@@ -192,18 +192,18 @@ function deleteDonationById($connect, $id) {
 function updateDonationRecord($connect, $data) {
 
 	$id = isset($data['id']) ? $data['id'] : '';
-	$username = isset($data['username']) ? $data['username'] : '';
+	$name = isset($data['name']) ? $data['name'] : '';
 	$description = isset($data['description']) ? $data['description'] : '';
 	$phone = isset($data['phone']) ? $data['phone'] : '';
 	$email = isset($data['email']) ? $data['email'] : '';
 	$donationType = isset($data['donationType']) ? $data['donationType'] : '';
-	$status = isset($data['status']) ? $data['status'] : '';
+	$donation = isset($data['donation']) ? $data['donation'] : '';
 
 	try {
 
-		$sql = "UPDATE donations SET username = ?, description = ?, phone = ?, email = ?, donationType = ?, status = ? WHERE id = ?";
+		$sql = "UPDATE donations SET name = ?, description = ?, phone = ?, email = ?, donationType = ?, donation = ? WHERE id = ?";
 		$stmt = $connect->prepare($sql);
-		$stmt->bind_param('ssssssi', $username, $description, $phone, $email, $donationType, $status, $id);
+		$stmt->bind_param('ssssssi', $name, $description, $phone, $email, $donationType, $donation, $id);
 
 		if ($stmt->execute()) {
 

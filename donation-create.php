@@ -9,21 +9,21 @@ $show = isset($_GET['load']) && $_GET['load'] != '' ? $_GET['load'] : '';
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $username       =   isset($_POST['username'])      ?    $_POST['username']      : '';
+    $name           =   isset($_POST['name'])          ?    $_POST['name']      : '';
     $description    =   isset($_POST['description'])   ?    $_POST['description']   : '';
     $phone          =   isset($_POST['phone'])         ?    $_POST['phone']         : '';
     $email          =   isset($_POST['email'])         ?    $_POST['email']         : '';
     $donationType   =   isset($_POST['donationType'])  ?    $_POST['donationType']  : '';
-    $status         =   isset($_POST['status'])        ?    $_POST['status']        : '';
+    $donation         =   isset($_POST['donation'])        ?    $_POST['donation']        : '';
     $image          =   isset($_FILES['image'])        ?    $_FILES['image']        : [];
 
     insertDonation($connect,
-        $username,
+        $name,
         $description,
         $phone,
         $email,
         $donationType,
-        $status,
+        $donation,
         $image,
     );
 }
@@ -48,8 +48,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="formWrapper">
             <form action="<?=$_SERVER['PHP_SELF'] ?>" method="POST" class="custom-form" enctype="multipart/form-data">
-                <label for="username">Username:</label>
-                <input placeholder="Enter username" type="text" id="username" name="username" required>
+                <label for="name">Name:</label>
+                <input placeholder="Enter name of donor" type="text" id="name" name="name" required>
 
                 <label for="description">Description:</label>
                 <textarea placeholder="Enter Description" id="description" name="description" rows="4" required></textarea>
@@ -67,8 +67,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="goods">Goods</option>
                 </select>
 
-                <label for="status">Status:</label>
-                <input placeholder="Enter status" type="text" id="status" name="status">
+                <label for="donation">Donation:</label>
+                <input placeholder="Enter donation" type="text" id="donation" name="donation">
 
                 <label for="image">Image:</label>
                 <input type="file" id="image" name="image" accept="image/*">

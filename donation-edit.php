@@ -35,8 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="formWrapper">
             <form action="<?=$_SERVER['PHP_SELF'] ?>" method="POST" class="custom-form">
                 <input type="hidden" name="id" value="<?= $donation['id'] ?>">
-                <label for="username">Username:</label>
-                <input type="text" value="<?=$donation['username'] ?>" id="username" name="username" required>
+                <label for="name">name:</label>
+                <input type="text" value="<?=$donation['name'] ?>" id="name" name="name" required>
 
                 <label for="description">Description:</label>
                 <textarea id="description" name="description" rows="4" required><?=$donation['description']?></textarea>
@@ -53,8 +53,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <option value="goods">Goods</option>
                 </select>
 
-                <label for="status">Status:</label>
-                <input type="text" value="<?=$donation['status']?>" id="status" name="status" required>
+                <label for="donation">Donation:</label>
+                <input type="text" value="<?=$donation['donation']?>" id="donation" name="donation" required>
 
                 <button type="submit">Save</button>
             </form>
