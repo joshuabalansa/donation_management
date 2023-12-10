@@ -21,7 +21,7 @@ require "db-connect.php";
         <div class="wrapper">
             <div class="titleBar">
                 <h2 style="color: #fff;">Posts</h2>
-                <a class="addBtn" href="javascript:void(0)" >Create a Post</a>
+                <a class="addBtn" href="post-create.php" >Create a Post</a>
             </div>
             <table>
                 <thead>
