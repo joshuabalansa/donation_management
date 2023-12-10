@@ -35,24 +35,24 @@ require "db-connect.php";
             <table>
                 <thead>
                 <tr>
-                    <th>Username</th>
+                    <th>Name</th>
                     <th>Description</th>
                     <th>Phone</th>
                     <th>Email</th>
                     <th>Donation Type</th>
-                    <th>Status</th>
+                    <th>Donation</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                     <?php while($row = $results->fetch_assoc()): ?>
                     <tr>
-                        <td><?=$row['username']; ?></td>
+                        <td><?=$row['name']; ?></td>
                         <td><?=$row['description']?></td>
                         <td><?=$row['phone']?></td>
                         <td><?=$row['email']?></td>
                         <td><?=$row['donationType']?></td>
-                        <td><?=$row['status']?></td>
+                        <td><?=$row['donation']?></td>
                         <td colspan="2">
                         <a title="View donation" style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-list-ul'></i></a>
                         <a title="Edit donation" style="font-size: 20px;color: #fff;" href="donation-edit.php?donationEdit=<?=$row['id']?>"><i class='bx bx-edit-alt'></i></a>
