@@ -99,6 +99,7 @@ function logoutUser()
 {
 	unset($_SESSION['user']);
 	ob_clean();
+	session_destroy();
     header('Location: index.php');
 }
 
