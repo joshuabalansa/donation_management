@@ -19,41 +19,6 @@
 CREATE DATABASE IF NOT EXISTS `edonatemo` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `edonatemo`;
 
--- Dumping structure for table edonatemo.admin
-CREATE TABLE IF NOT EXISTS `admin` (
-  `admin_ID` int NOT NULL AUTO_INCREMENT,
-  `admin_username` varchar(255) NOT NULL,
-  `admin_password` varchar(255) NOT NULL,
-  PRIMARY KEY (`admin_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Data exporting was unselected.
-
--- Dumping structure for table edonatemo.cash_dono
-CREATE TABLE IF NOT EXISTS `cash_dono` (
-  `cash_dono_ID` int NOT NULL AUTO_INCREMENT,
-  `org_ID` int DEFAULT NULL,
-  `cash_donation_description` text,
-  `cash_amount` decimal(10,2) DEFAULT NULL,
-  `receipt_id` int DEFAULT NULL,
-  `date_dono` date DEFAULT NULL,
-  `status` varchar(20) DEFAULT 'PENDING',
-  PRIMARY KEY (`cash_dono_ID`),
-  KEY `org_ID` (`org_ID`),
-  CONSTRAINT `cash_dono_ibfk_1` FOREIGN KEY (`org_ID`) REFERENCES `organization` (`org_ID`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Data exporting was unselected.
-
--- Dumping structure for table edonatemo.cash_receipt
-CREATE TABLE IF NOT EXISTS `cash_receipt` (
-  `receipt_id` int NOT NULL AUTO_INCREMENT,
-  `receipt_url` varchar(255) NOT NULL,
-  PRIMARY KEY (`receipt_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Data exporting was unselected.
-
 -- Dumping structure for table edonatemo.donations
 CREATE TABLE IF NOT EXISTS `donations` (
   `id` int NOT NULL AUTO_INCREMENT,
@@ -66,62 +31,6 @@ CREATE TABLE IF NOT EXISTS `donations` (
   `image` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Data exporting was unselected.
-
--- Dumping structure for table edonatemo.food_dono
-CREATE TABLE IF NOT EXISTS `food_dono` (
-  `food_dono_ID` int NOT NULL AUTO_INCREMENT,
-  `org_ID` int DEFAULT NULL,
-  `food_donation_description` text,
-  `date_dono` date DEFAULT NULL,
-  `status` varchar(20) DEFAULT 'PENDING',
-  PRIMARY KEY (`food_dono_ID`),
-  KEY `org_ID` (`org_ID`),
-  CONSTRAINT `food_dono_ibfk_1` FOREIGN KEY (`org_ID`) REFERENCES `organization` (`org_ID`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Data exporting was unselected.
-
--- Dumping structure for table edonatemo.goods_dono
-CREATE TABLE IF NOT EXISTS `goods_dono` (
-  `goods_dono_ID` int NOT NULL AUTO_INCREMENT,
-  `org_ID` int DEFAULT NULL,
-  `goods_donation_description` text,
-  `date_dono` date DEFAULT NULL,
-  `status` varchar(20) DEFAULT 'PENDING',
-  PRIMARY KEY (`goods_dono_ID`),
-  KEY `org_ID` (`org_ID`),
-  CONSTRAINT `goods_dono_ibfk_1` FOREIGN KEY (`org_ID`) REFERENCES `organization` (`org_ID`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Data exporting was unselected.
-
--- Dumping structure for table edonatemo.messages
-CREATE TABLE IF NOT EXISTS `messages` (
-  `message_id` int NOT NULL AUTO_INCREMENT,
-  `org_ID` int DEFAULT NULL,
-  `message_description` text,
-  `date` date DEFAULT NULL,
-  PRIMARY KEY (`message_id`),
-  KEY `org_ID` (`org_ID`),
-  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`org_ID`) REFERENCES `organization` (`org_ID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Data exporting was unselected.
-
--- Dumping structure for table edonatemo.organization
-CREATE TABLE IF NOT EXISTS `organization` (
-  `org_ID` int NOT NULL AUTO_INCREMENT,
-  `org_username` varchar(255) NOT NULL,
-  `org_password` varchar(255) NOT NULL,
-  `org_name` varchar(255) NOT NULL,
-  `org_description` text,
-  `org_contact` varchar(20) DEFAULT NULL,
-  `org_email` varchar(255) DEFAULT NULL,
-  `org_address` text,
-  PRIMARY KEY (`org_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Data exporting was unselected.
 
