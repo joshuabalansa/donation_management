@@ -45,6 +45,8 @@ if (!is_null($row)) {
         ];
         $counter++;
 	}
+	//var_dump("UPDATE messenger_messages SET seen_at=NOW() WHERE receiver_id='$user_id' AND seen_at IS NULL");
+	$connect->query("UPDATE messenger_messages SET seen_at=NOW() WHERE receiver_user_id='$user_id' AND seen_at IS NULL");
 }
 
 returnJson([

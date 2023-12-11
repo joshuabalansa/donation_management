@@ -14,6 +14,20 @@ require "db-connect.php";
             .bold {
                 font-weight: bold;
             }
+            #recipient-search {
+                margin-top: 10px;
+                margin-left: 5px;
+                width: 96%;
+                height: 30px;
+                padding: 10px;
+                font-size: 12px;
+            }
+            #recipient-submit {
+                padding: 5px;
+                width: 19%;
+                font-weight: bold;
+                display: none;
+            }
             .recipient-list {
             }
             .recipient-list li {
@@ -74,6 +88,10 @@ require "db-connect.php";
         ?>
         <div class="wrapper">
             <div class="messages-wrapper-recipients">
+                <form id="recipient-search-form" method="post" action="#">
+                    <input type="text" name="search" id="recipient-search">
+                    <button id="recipient-submit" type="submit">Find</button>
+                </form>
                 <ul class="recipient-list">
                 </ul>
             </div>
@@ -94,6 +112,9 @@ require "db-connect.php";
         <script>
 
             showRecipients();
+            setInterval(function() {
+                showRecipients('');
+            }, 5000);
             //showConvo();
 
             var xhr_send_message = null;
@@ -112,16 +133,7 @@ require "db-connect.php";
                         }
                     }).done(function(result) {
                         $('#input-message').val('');
-                        var messenger_id = $('#input-user-id').val();
-                        var recepient_id = $('#input-receiver-user-id').val();
-                        var recepient_name = $('#recepient-name').text();
-
-                        if(result.messenger_id != '') {
-                            messenger_id = result.messenger_id;
-                        }
-                        showConvo();
-                        //openMessageItem(messenger_id, recepient_id, recepient_name);
-                        //adminMessageList();
+                        showConvo($('#input-receiver-user-id').val());
                     }).fail(function(jqXHR, textStatus) {
                         if (jqXHR.status == 422) {
                             alert(error_messages(jqXHR.responseJSON.errors));
@@ -178,15 +190,25 @@ require "db-connect.php";
                 });
             }
 
+
+            var xhr_send_message = null;
+            $(function(){
+                $('#recipient-search-form').submit(function(e){
+                    showRecipients($('#recipient-search').val());
+                    e.preventDefault();
+                });
+            });
+
             var xhr_showRecipients = null;
-            function showRecipients()
+            function showRecipients(search='')
             {
                 var user_id = <?php echo $_SESSION['user']['id']; ?>;
+
 
                 xhr_showRecipients = $.ajax({
                     type : 'get',
                     url : 'api/message-recipients.php',
-                    data : 'user_id=' + user_id,
+                    data : 'user_id=' + user_id + '&search=' + search,
                     cache : false,
                     dataType : "json",
                     beforeSend: function(xhr) {

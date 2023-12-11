@@ -16,21 +16,21 @@
 
 
 -- Dumping database structure for edonatemo
-CREATE DATABASE IF NOT EXISTS `edonatemo` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE IF NOT EXISTS `edonatemo` /*!40100 DEFAULT CHARACTER SET utf8mb4 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `edonatemo`;
 
 -- Dumping structure for table edonatemo.donations
 CREATE TABLE IF NOT EXISTS `donations` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text,
+  `phone` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `donationType` varchar(255) NOT NULL,
-  `donation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `donation` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table edonatemo.donations: ~0 rows (approximately)
 DELETE FROM `donations`;
@@ -90,11 +90,11 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `phone` varchar(10) NOT NULL,
-  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
   `address` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Dumping data for table edonatemo.posts: ~0 rows (approximately)
 DELETE FROM `posts`;

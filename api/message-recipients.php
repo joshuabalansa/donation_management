@@ -10,42 +10,22 @@ if (!isset($_GET['user_id'])) {
 $user_id = $connect->real_escape_string($_GET['user_id']);
 
 $sql = 	"SELECT *, " . 
-		"(SELECT COUNT(id) FROM messenger_messages WHERE sender_user_id='$user_id' AND receiver_user_id=users.id AND seen_at IS NULL ORDER BY created_at DESC LIMIT 1) AS receiver_seen_at " . 
+		"(SELECT COUNT(id) FROM messenger_messages WHERE receiver_user_id='$user_id' AND sender_user_id=users.id AND seen_at IS NULL ORDER BY created_at DESC LIMIT 1) AS receiver_seen_at " . 
 		"FROM users " . 
-		"WHERE users.id != '$user_id' " . 
-		"ORDER BY name ASC ";
+		"WHERE users.id != '$user_id' ";
 
-/*$sql = 	"SELECT messenger.id, " . 
-		"messenger.sender_user_id, " . 
-		"u1.name AS sender_user_name, " . 
-		"messenger.receiver_user_id, " . 
-		"u2.name AS receiver_user_name, " . 
-		"DATE_FORMAT(messenger.created_at, \"%b %e, %Y %H:%i\") AS updatedAt, " . 
-		"(SELECT message FROM messenger_messages WHERE messenger_id=messenger.id ORDER BY created_at DESC LIMIT 1) AS message, " . 
-		"(SELECT seen_at FROM messenger_messages WHERE messenger_id=messenger.id ORDER BY created_at DESC LIMIT 1) AS receiver_seen_at, " . 
-		"(SELECT receiver_user_id FROM messenger_messages WHERE messenger_id=messenger.id ORDER BY created_at DESC LIMIT 1) AS message_receiver_user_id " . 
-		"FROM messenger " . 
-		"LEFT JOIN users AS u1 ON messenger.sender_user_id = u1.id " . 
-		"LEFT JOIN users AS u2 ON messenger.receiver_user_id = u2.id " . 
-		"WHERE messenger.sender_user_id != messenger.receiver_user_id " . 
-			"AND (messenger.sender_user_id = '$user_id' OR messenger.receiver_user_id = '$user_id') " . 
-			"ORDER BY messenger.created_at DESC ";*/
+if (isset($_GET['search']) && !empty($_GET['search'])) {
+	$search = $connect->real_escape_string($_GET['search']);
+	$sql .= "AND name LIKE \"$search%\" ";
+}
+
+$sql .= "ORDER BY name ASC LIMIT 100";
+
 $data = [];
 $counter = 0;
 
 $result = $connect->query($sql);
 while($row = $result->fetch_assoc()) {
-    /*$data[$counter] = [
-        'id' => $row['id'],
-        'sender_id' => $row['sender_user_id'],
-        'sender_name' => $row['sender_user_name'],
-        'receiver_id' => $row['receiver_user_id'],
-        'receiver_name' => $row['receiver_user_name'],
-        'message' => $row['message'],
-        'sent_at' => $row['receiver_seen_at'],
-        'message_receiver_user_id' => $row['message_receiver_user_id'],
-        'created_at' => $row['updatedAt']
-    ];*/
     $data[$counter] = [
         'sender_id' => $user_id,
         'receiver_id' => $row['id'],
