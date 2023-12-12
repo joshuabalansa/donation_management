@@ -66,7 +66,7 @@ require "db-connect.php";
                 padding: 10px;
                 font-size: 16px;
                 border: none;
-                border-top: 1px solid #ddd;
+                border-top: 1px solid #ccc;
             }
             #input-message-submit {
                 padding: 10px;
@@ -75,6 +75,9 @@ require "db-connect.php";
                 font-weight: bold;
                 border: none;
                 cursor: pointer;
+            } 
+            #input-message-submit:hover {
+                background: #ddd;
             }
             .message-box {
                 width: 70%;
