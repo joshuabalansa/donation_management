@@ -21,6 +21,8 @@ require "db-connect.php";
                 height: 30px;
                 padding: 10px;
                 font-size: 12px;
+                border: 1px solid #ddd;
+                border-radius: 20px;
             }
             #recipient-submit {
                 padding: 5px;
@@ -29,41 +31,50 @@ require "db-connect.php";
                 display: none;
             }
             .recipient-list {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
             }
             .recipient-list li {
                 padding: 10px;
-                border-bottom: 1px solid #848383;
+                list-style: none;
+                /* border-bottom: 1px solid #848383; */
             }
             .recipient-list li a {
-                font-size: 14px;
+                font-size: 16px;
                 display: block;
             }
             .messages-wrapper-recipients {
                 overflow-y: scroll;
                 height: 70%;
-                background-color: #ddd;
+                background-color: #fff;
                 width: 20%;
                 float: left;
             }
             .messages-wrapper {
                 float: left;
-                border: 1px solid #000;
+                /* border: 1px solid #000; */
                 height: 70%;
                 width: 80%;
-                background-color: #ddd;
+                background-color: #fff;
                 overflow-y: scroll;
                 float: right;
             }
             #input-message {
-                width: 90%;
+                width: 100%;
                 height: 50px;
                 padding: 10px;
                 font-size: 16px;
+                border: none;
+                border-top: 1px solid #ddd;
             }
             #input-message-submit {
-                padding: 15px;
+                padding: 10px;
                 width: 9%;
+                height: 50px;
                 font-weight: bold;
+                border: none;
+                cursor: pointer;
             }
             .message-box {
                 width: 70%;
@@ -79,6 +90,13 @@ require "db-connect.php";
                 margin-left: auto; 
                 margin-right: 10px;
             }
+            .form-button-wrapper {
+                display: flex;
+                justify-content: end;
+                align-items: center;
+                width: 100%;
+            }
+            
         </style>
     </head>
 
@@ -89,7 +107,7 @@ require "db-connect.php";
         <div class="wrapper">
             <div class="messages-wrapper-recipients">
                 <form id="recipient-search-form" method="post" action="#">
-                    <input type="text" name="search" id="recipient-search">
+                    <input placeholder="Search users..." type="text" name="search" id="recipient-search">
                     <button id="recipient-submit" type="submit">Find</button>
                 </form>
                 <ul class="recipient-list">
@@ -101,8 +119,12 @@ require "db-connect.php";
                 <form id="input-message-form" method="post" action="api/message-sent.php">
                     <input type="hidden" name="user_id" id="input-user-id" value="<?php echo $_SESSION['user']['id']; ?>">
                     <input type="hidden" name="receiver_user_id" id="input-receiver-user-id" value="9">
-                    <input type="text" name="message" id="input-message" required>
-                    <button id="input-message-submit" type="submit">Submit</button>
+                    <div class="form-button-wrapper">
+                        <input type="text" name="message" placeholder="Message" id="input-message" required>
+                        <button id="input-message-submit" type="submit">Send
+                            <span><i class='bx bx-send'></i></span>
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -172,7 +194,7 @@ require "db-connect.php";
                             messageBoxStyle = 'message-sent';
                         }
 
-                        messageWrapper += '<div id="' + last_message_id + '" class="message-box ' + messageBoxStyle + '">';
+                        messageWrapper += '<div style="border-radius: 10px; width: 40%;" id="' + last_message_id + '" class="message-box ' + messageBoxStyle + '">';
                         messageWrapper += '' + value.message;
                         messageWrapper += '</div>';
 
