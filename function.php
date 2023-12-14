@@ -10,7 +10,7 @@ function returnJson($data)
 	if (isset($_SERVER['HTTP_ORIGIN'])) {
 	    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
 	} else {
-	    header("Access-Control-Allow-Origin: *"); // Set a default value or handle it accordingly
+	    header("Access-Control-Allow-Origin: *");
 	}
 	
 	echo json_encode($data);
