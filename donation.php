@@ -38,7 +38,7 @@ require "db-connect.php";
                     <th>Name</th>
                     <th>Description</th>
                     <th>Phone</th>
-                    <th>Email</th>
+                    <th>Brgy</th>
                     <th>Donation Type</th>
                     <th>Donation</th>
                     <th>Action</th>
@@ -50,7 +50,7 @@ require "db-connect.php";
                         <td><?=$row['name']; ?></td>
                         <td><?=$row['description']?></td>
                         <td><?=$row['phone']?></td>
-                        <td><?=$row['email']?></td>
+                        <td><?=$row['brgy']?></td>
                         <td><?=$row['donationType']?></td>
                         <td><?=$row['donation']?></td>
                         <td colspan="2">

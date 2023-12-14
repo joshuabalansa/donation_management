@@ -4,13 +4,38 @@ include "check-session.php";
 include "function.php";
 require "db-connect.php";
 
-    $show = (isset($_GET['load']) && $_GET['load'] !='') ? $_GET['load'] : '';
+
+$search     =   '';
+$page       =   (isset($_GET['page']))? $_GET['page'] : 1;
+$limit      =   2;
+$skip       =   ($page - 1) * $limit;
+$sql        =   "SELECT * FROM posts ";
+$sqlCount   =   "SELECT COUNT(*) totalRows FROM posts ";
+
+if (isset($_GET['search'])) {
+
+   $search       = $connect->real_escape_string($_GET['search']);
+    $sql        .= "WHERE title LIKE '$search%' OR brgy LIKE '$search%' OR address LIKE '$search%' ";
+    $sqlCount   .= "WHERE title LIKE '$search%' OR brgy LIKE '$search%' OR address LIKE '$search%' ";
+}
+
+if (isset($_GET['userDelete'])) {
+    deleteUser($connect, $_GET['userDelete']);
+}
+
+$sql .= "LIMIT $skip, $limit";
+
+$result         =   postList($connect, $sql);
+$total_rows     =   totalRows($connect, $sqlCount);
+$total_pages    =   ceil($total_rows / $limit)
+
 ?> 
 <html>
     <head>
         <title>Posts | E - Donate Mo</title>
         <link rel="stylesheet" type="text/css" href="css/style.css">	
         <link rel="stylesheet" type="text/css" href="css/donations.css">	
+        <link rel="stylesheet" type="text/css" href="css/user.css"> 
     </head>
 
     <body>
@@ -18,24 +43,28 @@ require "db-connect.php";
         include 'header.php';
         ?>
         <div class="wrapper">
-        <div class="wrapper">
             <div class="titleBar">
                 <h2 style="color: #fff;">Posts</h2>
                 <a class="addBtn" href="post-create.php" >Create a Post</a>
             </div>
+            
+            <form class="searchBarContainer" action="posts.php" method="get">
+                <input class="searchbar" type="text" name="search" placeholder="Search users..." value="<?php echo $search; ?>"> 
+                <button class="searchBtn" type="submit"><i class='bx bx-search-alt-2' ></i></button>
+            </form>
+
             <table>
                 <thead>
                 <tr>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Phone</th>
-                    <th>Email</th>
+                    <th>Brgy</th>
                     <th>Address</th>
-                    <th>Image</th>
                     <th>Action</th>
                 </tr>
                 </thead>
-                <tbody>
+                <!-- <tbody>
                     
                     <tr>
                         <td>test</td>
@@ -52,10 +81,37 @@ require "db-connect.php";
                         </a>
                         </td>
                     </tr>
+                </tbody> -->
+                <tbody>
+                    <?php
+                    while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?=$row['title'] ?></td>
+                        <td><?=$row['description'] ?></td>
+                        <td><?=$row['phone'] ?></td>
+                        <td><?=$row['brgy'] ?></td>
+                        <td><?=$row['address'] ?></td>
+                        <td>
+                            <a style="font-size: 20px;color: #fff;" class="actionBtn" href="post-edit.php?id=<?=$row['id'] ?>"><i class='bx bx-edit-alt'></i></a>
+                            <a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)" onclick="confirmDelete(<?=$row['id']?>)"><i class='bx bx-trash-alt'></i></a>
+                        </td>
+                    </tr>
+                    <?php endwhile; ?>
                 </tbody>
-            </table>
+            </table><br>
+            <center>
+                <?=postPagination($page, $total_pages, $search); ?>
+            </center>
         </div>
-        </div>
+        <script>
+            function confirmDelete(userId) {
+                var confirmation = confirm("Are you sure you want to delete this post?")
+
+                if(confirmation) {
+                    window.location.href = "user.php?userDelete=" + userId
+                }
+            }
+        </script>
         <?php 
         include 'footer.php';
         ?>

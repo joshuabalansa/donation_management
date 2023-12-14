@@ -6,6 +6,14 @@ require "../db-connect.php";
 /**
  * Post rest API
  */
+
+
+if (!isset($_GET['user_id'])) {
+	returnJson([]);
+}
+
+$user_id = $connect->real_escape_string($_GET['user_id']);
+
 $method = $_SERVER['REQUEST_METHOD'];
 
 if($method === 'GET') {

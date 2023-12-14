@@ -9,19 +9,21 @@ $show = isset($_GET['load']) && $_GET['load'] != '' ? $_GET['load'] : '';
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    $post_id        =   isset($_POST['post_id'])          ?    $_POST['post_id']      : '';
     $name           =   isset($_POST['name'])          ?    $_POST['name']      : '';
     $description    =   isset($_POST['description'])   ?    $_POST['description']   : '';
     $phone          =   isset($_POST['phone'])         ?    $_POST['phone']         : '';
-    $email          =   isset($_POST['email'])         ?    $_POST['email']         : '';
+    $brgy           =   isset($_POST['brgy'])         ?    $_POST['brgy']         : '';
     $donationType   =   isset($_POST['donationType'])  ?    $_POST['donationType']  : '';
-    $donation         =   isset($_POST['donation'])        ?    $_POST['donation']        : '';
+    $donation       =   isset($_POST['donation'])        ?    $_POST['donation']        : '';
     $image          =   isset($_FILES['image'])        ?    $_FILES['image']        : [];
 
     insertDonation($connect,
+        $post_id,
         $name,
         $description,
         $phone,
-        $email,
+        $brgy,
         $donationType,
         $donation,
         $image,
@@ -48,6 +50,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="formWrapper">
             <form action="<?=$_SERVER['PHP_SELF'] ?>" method="POST" class="custom-form" enctype="multipart/form-data">
+
+                <label for="post_id">Post:</label>
+                <select id="post_id" name="post_id" required>
+                    <?php
+                    echo postListing($connect);
+                    ?>
+                </select>
+
                 <label for="name">Name:</label>
                 <input placeholder="Enter name of donor" type="text" id="name" name="name" required>
 
@@ -57,8 +67,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="phone">Phone:</label>
                 <input placeholder="Enter phone or tel number" type="number" id="phone" name="phone" maxlength="11" required>
 
-                <label for="email">Email:</label>
-                <input placeholder="Enter email address" type="email" id="email" name="email" required>
+                <label for="brgy">Brgy:</label>
+                <input placeholder="Enter Brgy" type="text" id="brgy" name="brgy" required>
 
                 <label for="donationType">Donation Type:</label>
                 <select id="donationType" name="donationType" required>

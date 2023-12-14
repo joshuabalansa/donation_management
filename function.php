@@ -3,12 +3,18 @@ include 'db-connect.php';
 
 function returnJson($data)
 {
-	header("Access-Control-Allow-Origin:*");
-	//header("Content-Type: application/json");
-	//header("Access-Control-Allow-Origin: http://localhost:1113");
-	$callback = $data['callback'];
-	unset($data['callback']);
-	echo $callback.'('.json_encode($data).')';
+	header("Content-Type: application/json");
+	header('Access-Control-Allow-Credentials: true');
+	header('Access-Control-Max-Age: 86400');
+	
+	if (isset($_SERVER['HTTP_ORIGIN'])) {
+	    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+	} else {
+	    header("Access-Control-Allow-Origin: *");
+	}
+	
+	echo json_encode($data);
+	
 	exit();
 }
 
@@ -63,11 +69,6 @@ function userList($connect, $sql)
 {
 	$result = $connect->query($sql);
 	return $result;
-
-	while ($row = $result->fetch_assoc()) {
-		var_dump($row);
-	}
-	return $rows;
 }
 
 function totalRows($connect, $sql)
@@ -134,30 +135,6 @@ function deleteUser($connect, $userId) {
 	}
 }
 
-function insertDonation($connect, $name, $description, $phone, $email, $donationType, $donation, $image) {
-
-	$target_dir = "uploads/";
-    $target_file = $target_dir . basename($image["name"]);
-
-    move_uploaded_file($image["tmp_name"], $target_file);
-
-	try {
-		$sql = "INSERT INTO donations (name, description, phone, email, donationType, donation, image)
-		VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-		$stmt = $connect->prepare($sql);
-		$stmt->bind_param("sssssss",  $name, $description, $phone, $email, $donationType, $donation, $target_file);
-
-		if($stmt->execute()) {
-			header('location: donation.php');
-		} else {
-			echo "Opps! Something went wrong," . $stmt->error();
-		}
-	} catch(Exception $e) {
-		echo "Caught exception" . $e->getMessage();
-	}
-}
-
 function getDonationById($connect, $id) {
     $sql = "SELECT * FROM donations WHERE id = ?";
     $stmt = $connect->prepare($sql);
@@ -193,22 +170,46 @@ function deleteDonationById($connect, $id) {
 	}
 }
 
+function insertDonation($connect, $post_id, $name, $description, $phone, $brgy, $donationType, $donation, $image) {
+
+	$target_dir = "uploads/";
+    $target_file = $target_dir . basename($image["name"]);
+
+    move_uploaded_file($image["tmp_name"], $target_file);
+
+	try {
+		$sql = "INSERT INTO donations (post_id, name, description, phone, brgy, donationType, donation, image, created_at)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+		$stmt = $connect->prepare($sql);
+		$stmt->bind_param('issssssss', $post_id, $name, $description, $phone, $brgy, $donationType, $donation, $target_file, date('Y-m-d H:i:s'));
+
+		if($stmt->execute()) {
+			header('location: donation.php');
+		} else {
+			echo "Opps! Something went wrong," . $stmt->error();
+		}
+	} catch(Exception $e) {
+		echo "Caught exception" . $e->getMessage();
+	}
+}
 
 function updateDonationRecord($connect, $data) {
 
 	$id = isset($data['id']) ? $data['id'] : '';
+	$post_id = isset($data['post_id']) ? $data['post_id'] : '';
 	$name = isset($data['name']) ? $data['name'] : '';
 	$description = isset($data['description']) ? $data['description'] : '';
 	$phone = isset($data['phone']) ? $data['phone'] : '';
-	$email = isset($data['email']) ? $data['email'] : '';
+	$brgy = isset($data['brgy']) ? $data['brgy'] : '';
 	$donationType = isset($data['donationType']) ? $data['donationType'] : '';
 	$donation = isset($data['donation']) ? $data['donation'] : '';
 
 	try {
 
-		$sql = "UPDATE donations SET name = ?, description = ?, phone = ?, email = ?, donationType = ?, donation = ? WHERE id = ?";
+		$sql = "UPDATE donations SET post_id = ?, name = ?, description = ?, phone = ?, brgy = ?, donationType = ?, donation = ? WHERE id = ?";
 		$stmt = $connect->prepare($sql);
-		$stmt->bind_param('ssssssi', $name, $description, $phone, $email, $donationType, $donation, $id);
+		$stmt->bind_param('issssssi', $post_id, $name, $description, $phone, $brgy, $donationType, $donation, $id);
 
 		if ($stmt->execute()) {
 
@@ -223,5 +224,45 @@ function updateDonationRecord($connect, $data) {
 	} catch(Exception $e) {
 		echo "Caught exception: " . $e->getMessage();
 	}
+}
+
+function postList($connect, $sql)
+{
+	$result = $connect->query($sql);
+	
+	return $result;
+}
+
+function postPagination($page, $total_pages, $search)
+{
+	$search_str = ($search != '')? '&search=' . $search : '';
+	$pagination = '';
+    if ($page <= 1) {
+    	$pagination .= '<a style="color: #fff;" href="javascript:void(0)">Previous</a> ';
+    } else {
+    	$pagination .= '<a style="color: #fff;" href="posts.php?page=' . ($page-1) . '' . $search_str . '">Previous</a> ';
+    }
+
+    $pagination .= "<span style='color: #fff'>" . $page . ' of ' . $total_pages . "</span>";
+
+    if ($page >= $total_pages) {
+    	$pagination .= ' <a style="color: #fff;" href="javascript:void(0)">Next</a>';
+    } else {
+    	$pagination .= ' <a style="color: #fff;" href="posts.php?page=' . ($page+1) . '' . $search_str . '">Next</a>';
+    }
+
+    return $pagination;
+}
+
+function postListing($connect)
+{
+	$sql = "SELECT *, (SELECT name FROM users WHERE id=posts.user_id LIMIT 1) user_post FROM posts ORDER BY id DESC LIMIT 1000";
+
+	$result = $connect->query($sql);
+	$options = '<option value=""></option>';
+	while($row = $result->fetch_assoc()) {
+		$options .= '<option value="'.$row['id'].'">'.$row['title'].' ('.$row['user_post'].')</option>';
+	}
+	return $options;
 }
 ?>

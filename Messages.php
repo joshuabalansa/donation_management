@@ -45,7 +45,6 @@ require "db-connect.php";
         include 'footer.php';
         ?>
         <script>
-
             showRecipients();
             setInterval(function() {
                 showRecipients('');
