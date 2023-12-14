@@ -40,6 +40,21 @@ if (isset($_POST['loginBtn'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/login.css">
     <title>Login Page</title>
+    <style type="text/css">
+        .sign-up {
+            padding: 10px;
+            background-color: #0e9d24;
+            display: block;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .sign-up:link,
+        .sign-up:visited,
+        .sign-up:active {
+            text-decoration: none;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -51,10 +66,11 @@ if (isset($_POST['loginBtn'])) {
         <label for="email">Email:</label>
         <input type="text" id="email" name="email" ><br>
 
-        <label for="password">Password: <?php echo (isset($error['password']))? $error['password'] : '';?></label>
+        <label for="password">Password: <span class="error-msg"><?php echo (isset($error['password']))? $error['password'] : '';?></span></label>
         <input type="password" id="password" name="password" ><br>
 
         <input type="submit" value="Login" name="loginBtn">
+        <a href="signup.php" class="sign-up">Sign Up</a>
         <?php echo (isset($error['email'])) ? $error['email'] : '';?>
     </form>
 </body>

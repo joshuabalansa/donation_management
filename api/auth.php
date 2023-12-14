@@ -7,6 +7,7 @@ if (isset($_POST['email'])) {
 
     $email = $connect->real_escape_string($_POST['email']);
     $password = $connect->real_escape_string($_POST['password']);
+    $callback = $connect->real_escape_string($_GET['callback']);
 
     $error = [];
 
@@ -23,7 +24,8 @@ if (isset($_POST['email'])) {
     if (!is_null($auth)) {
         $auth['token'] = authUserToken($connect, $auth['id']);
     	returnJson([
-    		'user' => $auth
+            'callback' => $callback,
+            'user' => $auth
     	]);
     }
 

@@ -74,6 +74,21 @@ if (isset($_POST['signupBtn'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="css/login.css">
     <title>Sign Up</title>
+    <style type="text/css">
+        .sign-up {
+            padding: 10px;
+            background-color: #0e9d24;
+            display: block;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .sign-up:link,
+        .sign-up:visited,
+        .sign-up:active {
+            text-decoration: none;
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 <header>
@@ -89,25 +104,26 @@ if (isset($_POST['signupBtn'])) {
         }
         ?>
 
-        <label for="name">Name: <?php echo (isset($error['name']))? $error['name'] : '';?></label>
+        <label for="name">Name: <span class="error-msg"><?php echo (isset($error['name']))? $error['name'] : '';?></span></label>
         <input type="text" id="name" name="name" value="<?php echo $name; ?>" required><br>
 
-        <label for="email">Email: <?php echo (isset($error['email']))? $error['email'] : '';?></label>
+        <label for="email">Email: <span class="error-msg"><?php echo (isset($error['email']))? $error['email'] : '';?></span></label>
         <input type="text" id="email" name="email" value="<?php echo $email; ?>" required><br>
 
-        <label for="password">Password: <?php echo (isset($error['password']))? $error['password'] : '';?></label>
+        <label for="password">Password: <span class="error-msg"><?php echo (isset($error['password']))? $error['password'] : '';?></span></label>
         <input type="password" id="password" name="password" value="<?php echo $password; ?>" required><br>
 
         <label for="password_confirm">Confirm Password:</label>
         <input type="password" id="password_confirm" name="password_confirm" value="<?php echo $password_confirm; ?>" ><br>
 
-        <label for="contact">Contact: <?php echo (isset($error['contact']))? $error['contact'] : '';?></label>
+        <label for="contact">Contact: <span class="error-msg"><?php echo (isset($error['contact']))? $error['contact'] : '';?></span></label>
         <input type="text" id="contact" name="contact" value="<?php echo $contact; ?>" required><br>
 
-        <label for="address">Address: <?php echo (isset($error['address']))? $error['address'] : '';?></label>
+        <label for="address">Address: <span class="error-msg"><?php echo (isset($error['address']))? $error['address'] : '';?></span></label>
         <input type="text" id="address" name="address" value="<?php echo $address; ?>" required><br>
 
         <input type="submit" value="Submit" name="signupBtn">
+        <a href="index.php" class="sign-up">Back to Login</a>
     </form>
 </body>
 </html>

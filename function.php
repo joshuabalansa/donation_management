@@ -3,8 +3,12 @@ include 'db-connect.php';
 
 function returnJson($data)
 {
-	header("Content-Type: application/json");
-	echo json_encode($data);
+	header("Access-Control-Allow-Origin:*");
+	//header("Content-Type: application/json");
+	//header("Access-Control-Allow-Origin: http://localhost:1113");
+	$callback = $data['callback'];
+	unset($data['callback']);
+	echo $callback.'('.json_encode($data).')';
 	exit();
 }
 
