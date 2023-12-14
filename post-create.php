@@ -6,6 +6,26 @@ require 'db-connect.php';
 
 $show = isset($_GET['load']) && $_GET['load'] != '' ? $_GET['load'] : '';
 
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    $title          =   isset($_POST['title'])          ? $_POST['title']           :   '';
+    $description    =   isset($_POST['description'])    ? $_POST['description']     :   '';
+    $phone          =   isset($_POST['phone'])          ? $_POST['phone']           :   '';
+    $email          =   isset($_POST['email'])          ? $_POST['email']           :   '';
+    $address        =   isset($_POST['address'])        ? $_POST['address']         :   '';
+    $image          =   isset($_FILES['image'])         ? $_FILES['image']          :   [];
+    
+    createPost(
+        $connect,
+        $title,
+        $description,
+        $phone,
+        $email,
+        $address,
+        $image
+    );
+}
+
 ?>
 <html>
 
@@ -26,7 +46,7 @@ $show = isset($_GET['load']) && $_GET['load'] != '' ? $_GET['load'] : '';
             <h2 style="color: #fff;">Create a post</h2>
         </div>
         <div class="formWrapper">
-            <form action="#" method="POST" class="custom-form" enctype="multipart/form-data">
+            <form action="<?=$_SERVER['PHP_SELF']  ?>" method="POST" class="custom-form" enctype="multipart/form-data">
                 <label for="title">Title:</label>
                 <input placeholder="Enter title" type="text" id="title" name="title" required>
 

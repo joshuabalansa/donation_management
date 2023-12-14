@@ -8,11 +8,11 @@ require "../db-connect.php";
  */
 
 
-if (!isset($_GET['user_id'])) {
-	returnJson([]);
-}
+// if (!isset($_GET['user_id'])) {
+// 	returnJson([]);
+// }
 
-$user_id = $connect->real_escape_string($_GET['user_id']);
+// $user_id = $connect->real_escape_string($_GET['user_id']);
 
 $method = $_SERVER['REQUEST_METHOD'];
 
