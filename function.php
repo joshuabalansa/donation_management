@@ -265,4 +265,28 @@ function postListing($connect)
 	}
 	return $options;
 }
+
+function createPost($connect, $title, $description, $phone, $email, $address, $image) {
+
+	try {
+		$target_dir = "uploads/";
+		$target_file = $target_dir . basename($image["name"]);
+	
+		move_uploaded_file($image["tmp_name"], $target_file);
+	
+		$sql = "INSERT INTO posts (title, description, phone, email, address, image) VALUES (?, ?, ?, ?, ?, ?)";
+
+		$stmt = $connect->prepare($sql);
+		$stmt->bind_param('ssssss', $title, $description, $phone, $email, $address, $target_file);
+
+		if($stmt->execute()) {
+			header('location: posts.php');
+		} else {
+			echo "Opps! Something went wrong" . $stmt->error();
+		}
+			
+	} catch (Exception $e) {
+		echo "Caught Exception" . $e->getMessage();
+	}
+}
 ?>

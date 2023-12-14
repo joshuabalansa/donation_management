@@ -67,6 +67,26 @@ if (isset($_POST['submitPost'])) {
     }
 }
 
+if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    $title          =   isset($_POST['title'])          ? $_POST['title']           :   '';
+    $description    =   isset($_POST['description'])    ? $_POST['description']     :   '';
+    $phone          =   isset($_POST['phone'])          ? $_POST['phone']           :   '';
+    $email          =   isset($_POST['email'])          ? $_POST['email']           :   '';
+    $address        =   isset($_POST['address'])        ? $_POST['address']         :   '';
+    $image          =   isset($_FILES['image'])         ? $_FILES['image']          :   [];
+    
+    createPost(
+        $connect,
+        $title,
+        $description,
+        $phone,
+        $email,
+        $address,
+        $image
+    );
+}
+
 ?>
 <html>
 
