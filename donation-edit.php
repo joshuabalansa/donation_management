@@ -44,9 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     ?>
                 </select>
 
-                <label for="name">name:</label>
-                <input type="text" value="<?=$donation['name'] ?>" id="name" name="name" required>
-
                 <label for="description">Description:</label>
                 <textarea id="description" name="description" rows="4" required><?=$donation['description']?></textarea>
 

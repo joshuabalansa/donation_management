@@ -170,7 +170,7 @@ function deleteDonationById($connect, $id) {
 	}
 }
 
-function insertDonation($connect, $post_id, $name, $description, $phone, $brgy, $donationType, $donation, $image) {
+function insertDonation($connect, $post_id, $description, $phone, $brgy, $donationType, $donation, $image) {
 
 	$target_dir = "uploads/";
     $target_file = $target_dir . basename($image["name"]);
@@ -178,11 +178,11 @@ function insertDonation($connect, $post_id, $name, $description, $phone, $brgy, 
     move_uploaded_file($image["tmp_name"], $target_file);
 
 	try {
-		$sql = "INSERT INTO donations (post_id, name, description, phone, brgy, donationType, donation, image, created_at)
+		$sql = "INSERT INTO donations (post_id, description, phone, brgy, donationType, donation, image, created_at)
 		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 		$stmt = $connect->prepare($sql);
-		$stmt->bind_param('issssssss', $post_id, $name, $description, $phone, $brgy, $donationType, $donation, $target_file, date('Y-m-d H:i:s'));
+		$stmt->bind_param('isssssss', $post_id, $description, $phone, $brgy, $donationType, $donation, $target_file, date('Y-m-d H:i:s'));
 
 		if($stmt->execute()) {
 			header('location: donation.php');
@@ -198,7 +198,6 @@ function updateDonationRecord($connect, $data) {
 
 	$id = isset($data['id']) ? $data['id'] : '';
 	$post_id = isset($data['post_id']) ? $data['post_id'] : '';
-	$name = isset($data['name']) ? $data['name'] : '';
 	$description = isset($data['description']) ? $data['description'] : '';
 	$phone = isset($data['phone']) ? $data['phone'] : '';
 	$brgy = isset($data['brgy']) ? $data['brgy'] : '';
@@ -207,9 +206,9 @@ function updateDonationRecord($connect, $data) {
 
 	try {
 
-		$sql = "UPDATE donations SET post_id = ?, name = ?, description = ?, phone = ?, brgy = ?, donationType = ?, donation = ? WHERE id = ?";
+		$sql = "UPDATE donations SET post_id = ?, description = ?, phone = ?, brgy = ?, donationType = ?, donation = ? WHERE id = ?";
 		$stmt = $connect->prepare($sql);
-		$stmt->bind_param('issssssi', $post_id, $name, $description, $phone, $brgy, $donationType, $donation, $id);
+		$stmt->bind_param('isssssi', $post_id, $description, $phone, $brgy, $donationType, $donation, $id);
 
 		if ($stmt->execute()) {
 

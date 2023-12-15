@@ -106,7 +106,7 @@ require "db-connect.php";
                             messageBoxStyle = 'message-sent';
                         }
 
-                        messageWrapper += '<div style="border-radius: 10px; width: 40%;" id="' + last_message_id + '" class="message-box ' + messageBoxStyle + '">';
+                        messageWrapper += '<div style="border-radius: 10px; width: 40%;" id="' + last_message_id + '" class="message-box ' + messageBoxStyle + '" title="' + value.created_at + '">';
                         messageWrapper += '' + value.message;
                         messageWrapper += '</div>';
 

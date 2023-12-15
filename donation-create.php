@@ -10,7 +10,6 @@ $show = isset($_GET['load']) && $_GET['load'] != '' ? $_GET['load'] : '';
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $post_id        =   isset($_POST['post_id'])          ?    $_POST['post_id']      : '';
-    $name           =   isset($_POST['name'])          ?    $_POST['name']      : '';
     $description    =   isset($_POST['description'])   ?    $_POST['description']   : '';
     $phone          =   isset($_POST['phone'])         ?    $_POST['phone']         : '';
     $brgy           =   isset($_POST['brgy'])         ?    $_POST['brgy']         : '';
@@ -20,7 +19,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     insertDonation($connect,
         $post_id,
-        $name,
         $description,
         $phone,
         $brgy,
