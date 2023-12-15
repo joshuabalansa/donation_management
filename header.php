@@ -5,12 +5,20 @@
     <div class="main">
     <img class="logo" src="images/edlogo.png">
         <nav>
+            <?php
+            $isAdmin = $_SESSION['user']['access_type'] == 'admin';
+            ?>
             <ul class="nav1">
+                <li><a href="main.php">Home</a></li>
+                <?php if($isAdmin) { ?>
                 <li><a href="user.php">Users</a></li>
+                <?php } ?>
+                <?php if($isAdmin) { ?>
+                <li><a href="reports.php">Reports</a></li>
+                <?php } ?>
                 <li><a href="donation.php">Donations</a></li>
                 <li><a href="messages.php">Messages</a></li>
                 <li><a href="posts.php">Posts</a></li>
-                <li><a href="about.php">About</a></li>
             </ul>
         </nav>
         

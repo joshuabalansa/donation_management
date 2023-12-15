@@ -56,6 +56,7 @@ $total_pages    =   ceil($total_rows / $limit)
             <table>
                 <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Phone</th>
@@ -64,28 +65,11 @@ $total_pages    =   ceil($total_rows / $limit)
                     <th>Action</th>
                 </tr>
                 </thead>
-                <!-- <tbody>
-                    
-                    <tr>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td>test</td>
-                        <td colspan="2">
-                        <a title="View donation" style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-list-ul'></i></a>
-                        <a title="Edit donation" style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-edit-alt'></i></a>
-                        <a title="Delete donation" style="font-size: 20px;color: #fff;" href="#" onclick="javascript:void(0)">
-                            <i class='bx bx-trash-alt'></i>
-                        </a>
-                        </td>
-                    </tr>
-                </tbody> -->
                 <tbody>
                     <?php
                     while ($row = $result->fetch_assoc()): ?>
                     <tr>
+                        <td><?=$row['id'] ?></td>
                         <td><?=$row['title'] ?></td>
                         <td><?=$row['description'] ?></td>
                         <td><?=$row['phone'] ?></td>

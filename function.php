@@ -64,6 +64,15 @@ function authUserToken($connect, $id)
 	return $token;
 }
 
+function getUserDetails($connect, $id)
+{
+	$sql = "SELECT * FROM users WHERE id='$id' LIMIT 1";
+
+	$result = $connect->query($sql);
+	$row = $result->fetch_assoc();
+
+	return $row;
+}
 
 function userList($connect, $sql)
 {
