@@ -70,8 +70,8 @@ $total_pages    =   ceil($total_rows / $limit)
                     while ($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td><?=$row['id'] ?></td>
-                        <td><?=$row['title'] ?></td>
-                        <td><?=$row['description'] ?></td>
+                        <td><?= substr($row['title'], 0, 100) . (strlen($row['title']) > 100 ? '...' : ''); ?></td>
+                        <td><?= substr($row['description'], 0, 100) . (strlen($row['description']) > 100 ? '...' : ''); ?></td>
                         <td><?=$row['phone'] ?></td>
                         <td><?=$row['brgy'] ?></td>
                         <td><?=$row['address'] ?></td>
@@ -92,7 +92,7 @@ $total_pages    =   ceil($total_rows / $limit)
                 var confirmation = confirm("Are you sure you want to delete this post?")
 
                 if(confirmation) {
-                    window.location.href = "user.php?userDelete=" + userId
+                    window.location.href = "function.php?postDelete=" + userId
                 }
             }
         </script>

@@ -274,27 +274,33 @@ function postListing($connect)
 	return $options;
 }
 
-function createPost($connect, $title, $description, $phone, $email, $address, $image) {
+function createPost($connect, $title, $description, $phone, $address, $brgy, $city, $province, $image, $user_id) {
 
 	try {
 		$target_dir = "uploads/";
 		$target_file = $target_dir . basename($image["name"]);
-	
-		move_uploaded_file($image["tmp_name"], $target_file);
-	
-		$sql = "INSERT INTO posts (title, description, phone, email, address, image) VALUES (?, ?, ?, ?, ?, ?)";
 
-		$stmt = $connect->prepare($sql);
-		$stmt->bind_param('ssssss', $title, $description, $phone, $email, $address, $target_file);
+		if (move_uploaded_file($image["tmp_name"], $target_file)) {
+	
+		
+			$sql = "INSERT INTO posts (title, description, phone, address, brgy, city, province, image, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$stmt = $connect->prepare($sql);
+			$stmt->bind_param('ssssssssi', $title, $description, $phone, $address, $brgy, $city, $province, $target_file, $user_id); 
 
-		if($stmt->execute()) {
-			header('location: posts.php');
+			if($stmt->execute()) {
+				header('location: posts.php');
+				exit; 
+			} else {
+				die("Oops! Something went wrong: " . $stmt->error);
+			}
+
 		} else {
-			echo "Opps! Something went wrong" . $stmt->error();
+			die("Failed to move the uploaded file.");
 		}
 			
 	} catch (Exception $e) {
-		echo "Caught Exception" . $e->getMessage();
+		die("Caught Exception: " . $e->getMessage());
 	}
 }
+
 ?>

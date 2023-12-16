@@ -21,8 +21,6 @@
                 <li><a href="posts.php">Posts</a></li>
             </ul>
         </nav>
-        
-    
         <a class="start" href="javascript:void(0)" onclick="logoutBtn()">Logout</a>
     </div>
 </div>

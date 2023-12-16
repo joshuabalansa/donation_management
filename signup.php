@@ -51,6 +51,8 @@ if (isset($_POST['signupBtn'])) {
 
         if ($connect->query($sql) === TRUE) {
             $signup_success = 'New record created successfully';
+            header('location: index.php');
+            exit;
         } else {
             $signup_success = "Error: " . $sql . "<br>" . $connect->error;
         }
