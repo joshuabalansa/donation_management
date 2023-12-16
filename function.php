@@ -311,17 +311,17 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 	}
 }
 
-function donate($connect, $name, $address, $phone, $email, $donationType, $donation, $image) {
+function donate($connect, $name, $address, $phone, $email, $donationType, $donation, $image, $postId) {
 	
     $target_file = basename($image["name"]);
     move_uploaded_file($image["tmp_name"], $target_file);
 
 	try {
-		$sql = "INSERT INTO donations (name, address, phone, email, donation_type, donation, image)
-		VALUES (?, ?, ?, ?, ?, ?, ?)";
+		$sql = "INSERT INTO donations (name, address, phone, email, donation_type, donation, image, post_id)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 		$stmt = $connect->prepare($sql);
-		$stmt->bind_param('sssssss', $name, $address, $phone, $email, $donationType, $donation, $target_file);
+		$stmt->bind_param('sssssssi', $name, $address, $phone, $email, $donationType, $donation, $target_file, $postId);
 
 		if($stmt->execute()) {
 			

@@ -4,32 +4,31 @@ include "check-session.php";
 include "function.php";
 require "db-connect.php";
 
-
+$userId = $_SESSION['user']['id'];
 $search     =   '';
 $page       =   (isset($_GET['page']))? $_GET['page'] : 1;
-$limit      =   2;
+$limit      =   8;
 $skip       =   ($page - 1) * $limit;
-$sql        =   "SELECT * FROM posts ";
-$sqlCount   =   "SELECT COUNT(*) totalRows FROM posts ";
+$sql        =   "SELECT * FROM posts WHERE user_id = $userId";
+$sqlCount   =   "SELECT COUNT(*) totalRows FROM posts WHERE user_id = $userId";
 
 if (isset($_GET['search'])) {
-
    $search       = $connect->real_escape_string($_GET['search']);
-    $sql        .= "WHERE title LIKE '$search%' OR brgy LIKE '$search%' OR address LIKE '$search%' ";
-    $sqlCount   .= "WHERE title LIKE '$search%' OR brgy LIKE '$search%' OR address LIKE '$search%' ";
+    $sql        .= "WHERE title LIKE '$search%' OR brgy LIKE '$search%' OR address LIKE '$search%' WHERE user_id = $userId";
+    $sqlCount   .= "WHERE title LIKE '$search%' OR brgy LIKE '$search%' OR address LIKE '$search%' WHERE user_id = $userId";
 }
 
 if (isset($_GET['userDelete'])) {
     deleteUser($connect, $_GET['userDelete']);
 }
 
-$sql .= "LIMIT $skip, $limit";
+$sql .= " LIMIT $skip, $limit";
 
 $result         =   postList($connect, $sql);
 $total_rows     =   totalRows($connect, $sqlCount);
 $total_pages    =   ceil($total_rows / $limit)
 
-?> 
+?>
 <html>
     <head>
         <title>Posts | E - Donate Mo</title>
@@ -44,7 +43,7 @@ $total_pages    =   ceil($total_rows / $limit)
         ?>
         <div class="wrapper">
             <div class="titleBar">
-                <h2 style="color: #fff;">Posts</h2>
+                <h2 style="color: #fff;">Your Posts</h2>
                 <a class="addBtn" href="post-create.php" >Create a Post</a>
             </div>
             

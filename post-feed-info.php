@@ -17,6 +17,7 @@
             $donationType = isset($_POST['donation_type']) ? $_POST['donation_type'] : '';
             $donation = isset($_POST['donation']) ? $_POST['donation'] : '';
             $image = isset($_FILES['image']) ? $_FILES['image'] : '';
+            $postId = isset($_GET['feed_id']) ? $_GET['feed_id'] : '';
 
             donate(
                 $connect,
@@ -26,7 +27,8 @@
                 $email,
                 $donationType,
                 $donation,
-                $image
+                $image,
+                $postId
             );
             exit;
         }
@@ -35,8 +37,6 @@
     $postId = $_GET['feed_id'];
     $sql = "SELECT * FROM posts WHERE id = $postId ORDER BY id DESC LIMIT 500";
     $result = postList($connect, $sql);
-
-   
 ?>
 
 <html>
@@ -66,7 +66,7 @@
                         </small>
                     </div>
 
-                    <form action="<?=htmlentities($_SERVER['PHP_SELF'])?>" method="post" enctype="multipart/form-data">
+                    <form action="post-feed-info.php?feed_id=<?=$row['id']?>" method="post" enctype="multipart/form-data">
                         <select name="donation_type" id="donationType" onchange="updateAmountPlaceholder()" required>
                             <option value="monetary">Monetary (Upload the reciept)</option>
                             <option value="goods">Goods</option>
