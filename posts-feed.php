@@ -21,61 +21,7 @@ $result = postList($connect, $sql);
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/donations.css">
     <link rel="stylesheet" type="text/css" href="css/user.css">
-    <style type="text/css">
-        .feed-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: start;
-            padding: 20px;
-        }
-
-        .feed-item {
-            max-width: 300px;
-            border: 1px solid #e5e5e5;
-            margin: 10px;
-            background-color: #fff;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-            display: flex; 
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .feed-item img {
-            width: 100%;
-            height: auto;
-            border-bottom: 1px solid #e5e5e5;
-        }
-
-        .feed-item h5 {
-            font-size: 1.2em;
-            margin: 10px;
-        }
-
-        .feed-item .description {
-            padding: 10px;
-            border-top: 1px solid #e5e5e5;
-            margin: 10px 0;
-        }
-
-        .feed-item small {
-            display: block;
-            color: #999;
-            margin: 10px;
-        }
-        .donate-button {
-            background-color: #007bff;
-            color: #fff;
-            font-size: 16px;
-            text-align:center;
-            margin: 5px;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/posts-feed.css">
 </head>
 
 <body>

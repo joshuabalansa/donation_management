@@ -122,7 +122,15 @@ function dump($object)
 {
 	echo '<pre>';
 	print_r($object);
+	echo '</pre>';
+}
+
+function dd($object)
+{
 	echo '<pre>';
+	print_r($object);
+	echo '</pre>';
+	die();
 }
 
 function deleteUser($connect, $userId) {
@@ -302,5 +310,29 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 		die("Caught Exception: " . $e->getMessage());
 	}
 }
+
+function donate($connect, $name, $address, $phone, $email, $donationType, $donation, $image) {
+	
+    $target_file = basename($image["name"]);
+    move_uploaded_file($image["tmp_name"], $target_file);
+
+	try {
+		$sql = "INSERT INTO donations (name, address, phone, email, donation_type, donation, image)
+		VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+		$stmt = $connect->prepare($sql);
+		$stmt->bind_param('sssssss', $name, $address, $phone, $email, $donationType, $donation, $target_file);
+
+		if($stmt->execute()) {
+			
+			header('location: posts-feed.php');
+		} else {
+			echo "Opps! Something went wrong," . $stmt->error();
+		}
+	} catch(Exception $e) {
+		echo "Caught exception" . $e->getMessage();
+	}
+}
+
 
 ?>
