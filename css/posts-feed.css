@@ -3,6 +3,8 @@
     flex-wrap: wrap;
     justify-content: start;
     padding: 20px;
+    width: 90%;
+    margin: 0 auto;
 }
 
 .feed-item {

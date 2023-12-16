@@ -311,21 +311,23 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 	}
 }
 
-function donate($connect, $name, $address, $phone, $email, $donationType, $donation, $image, $postId) {
+function donate($connect, $address, $phone, $brgy, $donationType, $donation, $image, $postId, $userId) {
 	
-    $target_file = basename($image["name"]);
+	$target_dir = "uploads/";
+    $target_file = $target_dir . basename($image["name"]);
     move_uploaded_file($image["tmp_name"], $target_file);
 
 	try {
-		$sql = "INSERT INTO donations (name, address, phone, email, donation_type, donation, image, post_id)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		$sql = "INSERT INTO donations (post_id, phone, brgy, donationType, donation, image, user_id, created_at)
+		VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
+		echo $sql;
 
 		$stmt = $connect->prepare($sql);
-		$stmt->bind_param('sssssssi', $name, $address, $phone, $email, $donationType, $donation, $target_file, $postId);
+		$stmt->bind_param('isssssi', $postId, $phone, $brgy, $donationType, $donation, $target_file, $userId);
 
 		if($stmt->execute()) {
 			
-			header('location: posts-feed.php');
+			header('location: main.php');
 		} else {
 			echo "Opps! Something went wrong," . $stmt->error();
 		}

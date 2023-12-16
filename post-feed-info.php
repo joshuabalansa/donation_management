@@ -8,27 +8,30 @@
     if(isset($_POST['submit'])) {
 
         if($_SERVER['REQUEST_METHOD'] === "POST") {
+            $postId = isset($_GET['feed_id']) ? $_GET['feed_id'] : '';
             $userId = $_SESSION['user']['id'];
+
             $userData = userList($connect, "SELECT * FROM users WHERE id = $userId")->fetch_assoc();
-            $name = isset($userData['name']) ? $userData['name'] : '';
-            $address = isset($userData['address']) ? $userData['address'] : '';
-            $phone = isset($userData['contact']) ? $userData['contact'] : '';
-            $email = isset($userData['email']) ? $userData['email'] : '';
+
+            $name = !empty($userData['name']) ? $userData['name'] : '';
+            $address = !empty($userData['address']) ? $userData['address'] : '';
+            $phone = !empty($userData['contact']) ? $userData['contact'] : '';
+            $brgy = !empty($userData['brgy']) ? $userData['brgy'] : '';
+
             $donationType = isset($_POST['donation_type']) ? $_POST['donation_type'] : '';
             $donation = isset($_POST['donation']) ? $_POST['donation'] : '';
             $image = isset($_FILES['image']) ? $_FILES['image'] : '';
-            $postId = isset($_GET['feed_id']) ? $_GET['feed_id'] : '';
 
             donate(
                 $connect,
-                $name,
                 $address,
                 $phone,
-                $email,
+                $brgy,
                 $donationType,
                 $donation,
                 $image,
-                $postId
+                $postId,
+                $userId
             );
             exit;
         }
@@ -53,10 +56,11 @@
     <div class="feed-wrapper">
         <?php
         while ($row = $result->fetch_assoc()) :
+            $img_placeholder = 'https://placehold.jp/300x300.png';
             $user = getUserDetails($connect, $row['user_id']);
         ?>
             <div class="feed-item">
-                <img src="<?= $row['image'] ?>" alt="Post Image">
+                <img src="<?= ((empty($row['image']))? $img_placeholder : $row['image']) ?>" alt="Post Image">
                 <div class="donation-form">
 
                     <div style="margin: 10px;">

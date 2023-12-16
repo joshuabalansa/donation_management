@@ -95,6 +95,7 @@ li, a, .start{
 }
 
   .footer {
+    position: absolute;
     background-color: white;
     padding: 10px;
     text-align: center;

@@ -36,7 +36,6 @@ require "db-connect.php";
                 <thead>
                 <tr>
                     <th>Post ID</th>
-                    <th>Description</th>
                     <th>Phone</th>
                     <th>Brgy</th>
                     <th>Donation Type</th>
@@ -48,7 +47,6 @@ require "db-connect.php";
                     <?php while($row = $results->fetch_assoc()): ?>
                     <tr>
                         <td><?=$row['post_id']; ?></td>
-                        <td><?=$row['description']?></td>
                         <td><?=$row['phone']?></td>
                         <td><?=$row['brgy']?></td>
                         <td><?=$row['donationType']?></td>
