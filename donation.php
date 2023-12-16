@@ -5,8 +5,8 @@ include "function.php";
 require "db-connect.php";
 
     $show = (isset($_GET['load']) && $_GET['load'] !='') ? $_GET['load'] : '';
-
-    $sql = "SELECT * FROM donations";
+    $user_id =  $_SESSION['user']['id'];
+    $sql = "SELECT * FROM donations WHERE post_id = $user_id";
     $results = $connect->query($sql);
     
     if(isset($_GET['donationDelete'])) {
@@ -29,15 +29,16 @@ require "db-connect.php";
         ?>
         <div class="wrapper">
             <div class="titleBar">
-                <h2 style="color: #fff;">Donation Information</h2>
-                <a class="addBtn" href="donation-create.php" >Manually Add a Record</a>
+                <h2 style="color: #fff;">Contribution Records</h2>
             </div>
             <table>
                 <thead>
                 <tr>
-                    <th>Post ID</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Address</th>
                     <th>Phone</th>
-                    <th>Brgy</th>
+                    <th>Email</th>
                     <th>Donation Type</th>
                     <th>Donation</th>
                     <th>Action</th>
@@ -46,15 +47,15 @@ require "db-connect.php";
                 <tbody>
                     <?php while($row = $results->fetch_assoc()): ?>
                     <tr>
-                        <td><?=$row['post_id']; ?></td>
+                        <td><?=$row['id']; ?></td>
+                        <td><?=$row['name']?></td>
+                        <td><?=$row['address']?></td>
                         <td><?=$row['phone']?></td>
-                        <td><?=$row['brgy']?></td>
-                        <td><?=$row['donationType']?></td>
+                        <td><?=$row['email']?></td>
+                        <td><?=$row['donation_type']?></td>
                         <td><?=$row['donation']?></td>
                         <td colspan="2">
                         <a title="View donation" style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-list-ul'></i></a>
-                        <a title="Edit donation" style="font-size: 20px;color: #fff;" href="donation-edit.php?donationEdit=<?=$row['id']?>"><i class='bx bx-edit-alt'></i></a>
-                        <a title="Delete donation" style="font-size: 20px;color: #fff;" href="#" onclick="confirmDelete(<?=$row['id']?>)">
                             <i class='bx bx-trash-alt'></i>
                         </a>
                         </td>

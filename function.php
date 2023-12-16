@@ -313,8 +313,7 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 
 function donate($connect, $address, $phone, $brgy, $donationType, $donation, $image, $postId, $userId) {
 	
-	$target_dir = "uploads/";
-    $target_file = $target_dir . basename($image["name"]);
+    $target_file = '/uploads' . basename($image["name"]);
     move_uploaded_file($image["tmp_name"], $target_file);
 
 	try {

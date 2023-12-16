@@ -47,9 +47,8 @@
     <title>Posts | E - Donate Mo</title>
     <meta http-equiv="X-UA-Compatible" content="IE=7">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/donations.css">
-    <link rel="stylesheet" type="text/css" href="css/user.css">
     <link rel="stylesheet" type="text/css" href="css/post-feed-info.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
     <?php include 'header.php'; ?>
@@ -70,14 +69,15 @@
                         </small>
                     </div>
 
-                    <form action="post-feed-info.php?feed_id=<?=$row['id']?>" method="post" enctype="multipart/form-data">
+                    <form action="post-feed-info.php?feed_id=<?=$row['user_id'] ?>" method="post" enctype="multipart/form-data">
                         <select name="donation_type" id="donationType" onchange="updateAmountPlaceholder()" required>
-                            <option value="monetary">Monetary (Upload the reciept)</option>
+                            <option value="monetary">Monetary</option>
                             <option value="goods">Goods</option>
                         </select>
 
-                        <input type="text" id="amountInput" name="donation" placeholder="Amount">
-                        <input type="file" name="image" id="image" style="display: none;">
+                        <input type="text" id="amountInput" name="donation" placeholder="Amount" required>
+
+                        <input type="file" name="image" id="image">
                         
                         <button name="submit" type="submit" class="donate-button">Donate</button>
                         <a href="posts-feed.php" type="submit">Back</a>
@@ -96,19 +96,18 @@
             var image = document.getElementById('image');
 
             if (donationType.value === 'goods') {
+                amountInput.type = 'text';
                 amountInput.placeholder = 'Enter type of Goods';
-                image.style.display = 'none';
             } else {
+                amountInput.type = 'number';
                 amountInput.placeholder = 'Enter Amount';
-                image.style.display = 'block';
-
             }
         }
         document.getElementById('donationType').addEventListener('change', updateAmountPlaceholder);
         updateAmountPlaceholder();
     });
 </script>
-    <?php include 'footer.php'; ?>
+<?php include 'footer.php'; ?>
 </body>
 
 </html>

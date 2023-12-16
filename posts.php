@@ -5,17 +5,25 @@ include "function.php";
 require "db-connect.php";
 
 $userId = $_SESSION['user']['id'];
+$access_type = $_SESSION['user']['access_type'];
+
+if($access_type === 'user') {
+    $filteredQuery = "WHERE user_id = $userId";
+} else {
+    $filteredQuery = "";
+}
+
 $search     =   '';
-$page       =   (isset($_GET['page']))? $_GET['page'] : 1;
+$page       =   (isset($_GET['page'])) ? $_GET['page'] : 1;
 $limit      =   8;
 $skip       =   ($page - 1) * $limit;
-$sql        =   "SELECT * FROM posts WHERE user_id = $userId";
-$sqlCount   =   "SELECT COUNT(*) totalRows FROM posts WHERE user_id = $userId";
+$sql        =   "SELECT * FROM posts $filteredQuery";
+$sqlCount   =   "SELECT COUNT(*) totalRows FROM posts";
 
 if (isset($_GET['search'])) {
    $search       = $connect->real_escape_string($_GET['search']);
-    $sql        .= "WHERE title LIKE '$search%' OR brgy LIKE '$search%' OR address LIKE '$search%' WHERE user_id = $userId";
-    $sqlCount   .= "WHERE title LIKE '$search%' OR brgy LIKE '$search%' OR address LIKE '$search%' WHERE user_id = $userId";
+    $sql        .= "WHERE title LIKE '$search%' OR brgy LIKE '$search%' OR address LIKE '$search%'";
+    $sqlCount   .= "WHERE title LIKE '$search%' OR brgy LIKE '$search%' OR address LIKE '$search%'";
 }
 
 if (isset($_GET['userDelete'])) {
