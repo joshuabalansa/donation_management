@@ -38,6 +38,22 @@ CREATE TABLE IF NOT EXISTS `cash_receipt` (
 
 -- Data exporting was unselected.
 
+-- Dumping structure for table edonatemo.donations
+CREATE TABLE IF NOT EXISTS `donations` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `donation_type` varchar(255) NOT NULL,
+  `donation` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `post_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Data exporting was unselected.
+
 -- Dumping structure for table edonatemo.food_dono
 CREATE TABLE IF NOT EXISTS `food_dono` (
   `food_dono_ID` int NOT NULL AUTO_INCREMENT,
