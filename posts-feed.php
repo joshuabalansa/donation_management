@@ -25,7 +25,7 @@ $result = postList($connect, $sql);
         .feed-wrapper {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
+            justify-content: start;
             padding: 20px;
         }
 
@@ -79,9 +79,7 @@ $result = postList($connect, $sql);
 </head>
 
 <body>
-    <?php
-    include 'header.php';
-    ?>
+    <?php include 'header.php'; ?>
     <div class="feed-wrapper">
         <?php
         while ($row = $result->fetch_assoc()) :
@@ -89,10 +87,11 @@ $result = postList($connect, $sql);
         ?>
             <div class="feed-item">
                 <img src="<?= $row['image'] ?>" alt="Post Image">
-                <h5><?= $row['title'] ?> - Brgy. <?= $row['brgy'] ?></h5>
-                <div class="description"><?= $row['description'] ?></div>
+                    <h5><?=$row['title'] ?></h5>
+                <div class="description"><?= substr($row['description'], 0, 80) . (strlen($row['description']) > 100 ? '...' : ''); ?></div>
+                <p style="  padding: 10px;"><?=$row['address'] . ' ' . $row['brgy'] . ' ' . $row['city']?></p>
                 <small><?= $row['created_at'] ?></small>
-                <a href="javascript:void(0)" class="donate-button">Donate</a>
+                <a href="post-feed-info.php?feed_id=<?=$row['id']?>" class="donate-button">Donate</a>
             </div>
         <?php endwhile; ?>
     </div>

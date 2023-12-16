@@ -283,7 +283,7 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 		if (move_uploaded_file($image["tmp_name"], $target_file)) {
 	
 		
-			$sql = "INSERT INTO posts (title, description, phone, address, brgy, city, province, image, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			$sql = "INSERT INTO posts (title, description, phone, address, brgy, city, province, image, user_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
 			$stmt = $connect->prepare($sql);
 			$stmt->bind_param('ssssssssi', $title, $description, $phone, $address, $brgy, $city, $province, $target_file, $user_id); 
 
