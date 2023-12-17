@@ -41,6 +41,12 @@ if(isset($_GET['updateStatus'])) {
     $status = "approved";
     postUpdateStatus($connect, $postId, $status);
 }
+
+if (isset($_SESSION['alert_message'])) {
+    echo '<script>alert("' . $_SESSION['alert_message'] . '");</script>';
+    unset($_SESSION['alert_message']);
+}
+session_write_close();
 ?>
 <html>
     <head>

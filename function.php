@@ -313,6 +313,10 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 			$stmt->bind_param('ssssssssi', $title, $description, $phone, $address, $brgy, $city, $province, $target_file, $user_id); 
 
 			if($stmt->execute()) {
+				session_start();
+                $_SESSION['alert_message'] = "Your submission is in the review queue";
+                session_write_close();
+				$stmt->close();
 				header('location: posts.php');
 				exit; 
 			} else {
