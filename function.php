@@ -187,60 +187,60 @@ function deleteDonationById($connect, $id) {
 	}
 }
 
-function insertDonation($connect, $post_id, $description, $phone, $brgy, $donationType, $donation, $image) {
+// function insertDonation($connect, $post_id, $description, $phone, $brgy, $donationType, $donation, $image) {
 
-	$target_dir = "uploads/";
-    $target_file = $target_dir . basename($image["name"]);
+// 	$target_dir = "uploads/";
+//     $target_file = $target_dir . basename($image["name"]);
 
-    move_uploaded_file($image["tmp_name"], $target_file);
+//     move_uploaded_file($image["tmp_name"], $target_file);
 
-	try {
-		$sql = "INSERT INTO donations (post_id, description, phone, brgy, donationType, donation, image, created_at)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+// 	try {
+// 		$sql = "INSERT INTO donations (post_id, description, phone, brgy, donationType, donation, image, created_at)
+// 		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-		$stmt = $connect->prepare($sql);
-		$stmt->bind_param('isssssss', $post_id, $description, $phone, $brgy, $donationType, $donation, $target_file, date('Y-m-d H:i:s'));
+// 		$stmt = $connect->prepare($sql);
+// 		$stmt->bind_param('isssssss', $post_id, $description, $phone, $brgy, $donationType, $donation, $target_file, date('Y-m-d H:i:s'));
 
-		if($stmt->execute()) {
-			header('location: donation.php');
-		} else {
-			echo "Opps! Something went wrong," . $stmt->error();
-		}
-	} catch(Exception $e) {
-		echo "Caught exception" . $e->getMessage();
-	}
-}
+// 		if($stmt->execute()) {
+// 			header('location: donation.php');
+// 		} else {
+// 			echo "Opps! Something went wrong," . $stmt->error();
+// 		}
+// 	} catch(Exception $e) {
+// 		echo "Caught exception" . $e->getMessage();
+// 	}
+// }
 
-function updateDonationRecord($connect, $data) {
+// function updateDonationRecord($connect, $data) {
 
-	$id = isset($data['id']) ? $data['id'] : '';
-	$post_id = isset($data['post_id']) ? $data['post_id'] : '';
-	$description = isset($data['description']) ? $data['description'] : '';
-	$phone = isset($data['phone']) ? $data['phone'] : '';
-	$brgy = isset($data['brgy']) ? $data['brgy'] : '';
-	$donationType = isset($data['donationType']) ? $data['donationType'] : '';
-	$donation = isset($data['donation']) ? $data['donation'] : '';
+// 	$id = isset($data['id']) ? $data['id'] : '';
+// 	$post_id = isset($data['post_id']) ? $data['post_id'] : '';
+// 	$description = isset($data['description']) ? $data['description'] : '';
+// 	$phone = isset($data['phone']) ? $data['phone'] : '';
+// 	$brgy = isset($data['brgy']) ? $data['brgy'] : '';
+// 	$donationType = isset($data['donationType']) ? $data['donationType'] : '';
+// 	$donation = isset($data['donation']) ? $data['donation'] : '';
 
-	try {
+// 	try {
 
-		$sql = "UPDATE donations SET post_id = ?, description = ?, phone = ?, brgy = ?, donationType = ?, donation = ? WHERE id = ?";
-		$stmt = $connect->prepare($sql);
-		$stmt->bind_param('isssssi', $post_id, $description, $phone, $brgy, $donationType, $donation, $id);
+// 		$sql = "UPDATE donations SET post_id = ?, description = ?, phone = ?, brgy = ?, donationType = ?, donation = ? WHERE id = ?";
+// 		$stmt = $connect->prepare($sql);
+// 		$stmt->bind_param('isssssi', $post_id, $description, $phone, $brgy, $donationType, $donation, $id);
 
-		if ($stmt->execute()) {
+// 		if ($stmt->execute()) {
 
-			header('location: donation.php');
-		} else {
+// 			header('location: donation.php');
+// 		} else {
 
-			echo "Opps! Something went wrong" . $stmt->error();
-		}
-		$stmt->close();
-		$connect->close();
+// 			echo "Opps! Something went wrong" . $stmt->error();
+// 		}
+// 		$stmt->close();
+// 		$connect->close();
 
-	} catch(Exception $e) {
-		echo "Caught exception: " . $e->getMessage();
-	}
-}
+// 	} catch(Exception $e) {
+// 		echo "Caught exception: " . $e->getMessage();
+// 	}
+// }
 
 function postList($connect, $sql)
 {
@@ -311,29 +311,36 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 	}
 }
 
-function donate($connect, $address, $phone, $brgy, $donationType, $donation, $image, $postId, $userId) {
-	
-    $target_file = '/uploads' . basename($image["name"]);
-    move_uploaded_file($image["tmp_name"], $target_file);
+function donate($connect, $name, $address, $phone, $email, $donationType, $donation, $image, $postId, $userId) {
+    
+    try {
+		$target_dir = "uploads/";
+		$target_file = $target_dir . basename($image["name"]);
+		
+		if(move_uploaded_file($image["tmp_name"], $target_file)) {
+			$sql = "INSERT INTO donations (name, address, phone, email, donation_type, donation, image, post_id, user_id, created_at)
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
-	try {
-		$sql = "INSERT INTO donations (post_id, phone, brgy, donationType, donation, image, user_id, created_at)
-		VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
-		echo $sql;
+			$currentTimestamp = date("Y-m-d H:i:s"); 
 
-		$stmt = $connect->prepare($sql);
-		$stmt->bind_param('isssssi', $postId, $phone, $brgy, $donationType, $donation, $target_file, $userId);
+			$stmt = $connect->prepare($sql);
+			$stmt->bind_param('ssssssiiss', $name, $address, $phone, $email, $donationType, $donation, $target_file, $postId, $userId, $currentTimestamp);
 
-		if($stmt->execute()) {
-			
-			header('location: main.php');
-		} else {
-			echo "Opps! Something went wrong," . $stmt->error();
+			if($stmt->execute()) {
+				
+				header('location: main.php');
+			} else {
+				die("Oops! Something went wrong," . $stmt->error());
+			}
+		}else {
+			die("Failed to move the uploaded file.");
 		}
-	} catch(Exception $e) {
-		echo "Caught exception" . $e->getMessage();
-	}
+    } catch(Exception $e) {
+        die("Caught Exception: " . $e);
+    }
 }
+
+
 
 
 ?>

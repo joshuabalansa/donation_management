@@ -6,7 +6,14 @@ require "db-connect.php";
 
     $show = (isset($_GET['load']) && $_GET['load'] !='') ? $_GET['load'] : '';
     $user_id =  $_SESSION['user']['id'];
-    $sql = "SELECT * FROM donations WHERE post_id = $user_id";
+
+    if($_SESSION['user']['access_type'] === 'admin') {
+
+        $sql = "SELECT * FROM donations";
+    } else {
+        $sql = "SELECT * FROM donations WHERE user_id = $user_id";
+    }
+
     $results = $connect->query($sql);
     
     if(isset($_GET['donationDelete'])) {

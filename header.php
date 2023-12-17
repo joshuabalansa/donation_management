@@ -9,7 +9,7 @@
                 $isAdmin = $_SESSION['user']['access_type'] === 'admin';
             ?>
             <ul class="nav1">
-                <li><a href="posts-feed.php">Home</a></li>
+                <li><a href="main.php">Home</a></li>
                 <?php if($isAdmin) : ?>
                     <li><a href="user.php">Users</a></li>
                 <?php endif; ?>
@@ -19,7 +19,7 @@
                 <li><a href="donation.php">Donations</a></li>
                 <li><a href="messages.php">Messages</a></li>
                 <li><a href="posts.php">Posts</a></li>
-                <li><a href="javascript:void(0)">Profile</a></li>
+                <li><a href="profile.php">Profile</a></li>
             </ul>
         </nav>
         <a class="start" href="javascript:void(0)" onclick="logoutBtn()">Logout</a>

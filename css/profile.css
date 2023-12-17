@@ -1,0 +1,38 @@
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.profile {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profile-item {
+    margin-bottom: 15px;
+  }
+
+  .profile-item label {
+    font-weight: bold;
+  }
+
+  .name,
+  .email,
+  .contact,
+  .access-type {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+  }
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+  }

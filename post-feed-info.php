@@ -8,30 +8,36 @@
     if(isset($_POST['submit'])) {
 
         if($_SERVER['REQUEST_METHOD'] === "POST") {
+            
             $postId = isset($_GET['feed_id']) ? $_GET['feed_id'] : '';
             $userId = $_SESSION['user']['id'];
 
             $userData = userList($connect, "SELECT * FROM users WHERE id = $userId")->fetch_assoc();
 
-            $name = !empty($userData['name']) ? $userData['name'] : '';
-            $address = !empty($userData['address']) ? $userData['address'] : '';
-            $phone = !empty($userData['contact']) ? $userData['contact'] : '';
-            $brgy = !empty($userData['brgy']) ? $userData['brgy'] : '';
+            $name       = !empty($userData['name']) ? $userData['name'] : '';
+            $address    = !empty($userData['address']) ? $userData['address'] : '';
+            $phone      = !empty($userData['contact']) ? $userData['contact'] : '';
+            $email       = !empty($userData['email']) ? $userData['email'] : '';
 
-            $donationType = isset($_POST['donation_type']) ? $_POST['donation_type'] : '';
-            $donation = isset($_POST['donation']) ? $_POST['donation'] : '';
-            $image = isset($_FILES['image']) ? $_FILES['image'] : '';
+            $donationType   = isset($_POST['donation_type'])    ?   $_POST['donation_type'] : '';
+            $donation       = isset($_POST['donation'])         ?   $_POST['donation'] : '';
+            $image          = isset($_FILES['image'])           ? $_FILES['image'] : [];
+
+            if ($image['error'] !== UPLOAD_ERR_OK) {
+                die("File upload failed with error code: " . $image['error']);
+            }
 
             donate(
                 $connect,
+                $name,
                 $address,
                 $phone,
-                $brgy,
+                $email,
                 $donationType,
                 $donation,
                 $image,
                 $postId,
-                $userId
+                $userId,
             );
             exit;
         }
@@ -59,7 +65,7 @@
             $user = getUserDetails($connect, $row['user_id']);
         ?>
             <div class="feed-item">
-                <img src="<?= ((empty($row['image']))? $img_placeholder : $row['image']) ?>" alt="Post Image">
+                <img src="<?= ((empty($row['image'])) ? $img_placeholder : $row['image']) ?>" alt="Post Image">
                 <div class="donation-form">
 
                     <div style="margin: 10px;">
@@ -77,10 +83,10 @@
 
                         <input type="text" id="amountInput" name="donation" placeholder="Amount" required>
 
-                        <input type="file" name="image" id="image">
+                        <input type="file" name="image" id="image" required>
                         
                         <button name="submit" type="submit" class="donate-button">Donate</button>
-                        <a href="posts-feed.php" type="submit">Back</a>
+                        <a href="main.php" type="submit">Back</a>
                    
                     </form>
                 </div>
@@ -106,8 +112,16 @@
         document.getElementById('donationType').addEventListener('change', updateAmountPlaceholder);
         updateAmountPlaceholder();
     });
+
+    function confirmDonate(donationId) {
+                 var confirmation = confirm("Are you sure you want proceed?")
+
+                 if (confirmation) {
+                    window.location.href = "donation.php?donationDelete=" + donationId
+                 }
+            }
 </script>
-<?php include 'footer.php'; ?>
+<?php #include 'footer.php'; ?>
 </body>
 
 </html>

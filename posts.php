@@ -51,7 +51,7 @@ $total_pages    =   ceil($total_rows / $limit)
         ?>
         <div class="wrapper">
             <div class="titleBar">
-                <h2 style="color: #fff;">Your Posts</h2>
+                <h2 style="color: #fff;">My Posts</h2>
                 <a class="addBtn" href="post-create.php" >Create a Post</a>
             </div>
             
@@ -103,8 +103,6 @@ $total_pages    =   ceil($total_rows / $limit)
                 }
             }
         </script>
-        <?php 
-        include 'footer.php';
-        ?>
+        <?php #include 'footer.php'; ?>
     </body>
 </html>

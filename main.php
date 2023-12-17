@@ -21,7 +21,7 @@ $result = postList($connect, $sql);
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/donations.css">
     <link rel="stylesheet" type="text/css" href="css/user.css">
-    <link rel="stylesheet" type="text/css" href="css/posts-feed.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
     <style type="text/css">
         .feed-item img {
             width: 300px;
@@ -51,7 +51,7 @@ $result = postList($connect, $sql);
         <?php endwhile; ?>
     </div>
     <?php
-    include 'footer.php';
+   # include 'footer.php';
     ?>
 </body>
 

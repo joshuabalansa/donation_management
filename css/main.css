@@ -1,7 +1,7 @@
 .feed-wrapper {
     display: flex;
     flex-wrap: wrap;
-    justify-content: start;
+    justify-content: center;
     padding: 20px;
     width: 90%;
     margin: 0 auto;
