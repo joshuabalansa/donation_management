@@ -5,9 +5,9 @@ include "function.php";
 require "db-connect.php";
 
 $userId = $_SESSION['user']['id'];
-$access_type = $_SESSION['user']['access_type'];
+$isUser = $_SESSION['user']['access_type']  === 'user';
 
-if($access_type === 'user') {
+if($isUser) {
     $filteredQuery = "WHERE user_id = $userId";
 } else {
     $filteredQuery = "";
@@ -34,8 +34,13 @@ $sql .= " LIMIT $skip, $limit";
 
 $result         =   postList($connect, $sql);
 $total_rows     =   totalRows($connect, $sqlCount);
-$total_pages    =   ceil($total_rows / $limit)
+$total_pages    =   ceil($total_rows / $limit);
 
+if(isset($_GET['updateStatus'])) {
+    $postId = $_GET['updateStatus'];
+    $status = "approved";
+    postUpdateStatus($connect, $postId, $status);
+}
 ?>
 <html>
     <head>
@@ -67,8 +72,8 @@ $total_pages    =   ceil($total_rows / $limit)
                     <th>Title</th>
                     <th>Description</th>
                     <th>Phone</th>
-                    <th>Brgy</th>
                     <th>Address</th>
+                    <th>status</th>
                     <th>Action</th>
                 </tr>
                 </thead>
@@ -77,12 +82,15 @@ $total_pages    =   ceil($total_rows / $limit)
                     while ($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td><?=$row['id'] ?></td>
-                        <td><?= substr($row['title'], 0, 100) . (strlen($row['title']) > 100 ? '...' : ''); ?></td>
-                        <td><?= substr($row['description'], 0, 100) . (strlen($row['description']) > 100 ? '...' : ''); ?></td>
+                        <td><?= substr($row['title'], 0, 50) . (strlen($row['title']) > 100 ? '...' : ''); ?></td>
+                        <td><?= substr($row['description'], 0, 50) . (strlen($row['description']) > 100 ? '...' : ''); ?></td>
                         <td><?=$row['phone'] ?></td>
-                        <td><?=$row['brgy'] ?></td>
                         <td><?=$row['address'] ?></td>
-                        <td>
+                        <td><?=$row['status'] ?></td>
+                        <td colspan="3">
+                            <?php if(!$isUser): ?>
+                            <a style="font-size: 20px;color: #fff;" class="actionBtn" href="posts.php?updateStatus=<?=$row['id'] ?>"><i class='bx bx-check'></i></a>
+                            <?php endif; ?>
                             <a style="font-size: 20px;color: #fff;" class="actionBtn" href="post-edit.php?id=<?=$row['id'] ?>"><i class='bx bx-edit-alt'></i></a>
                             <a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)" onclick="confirmDelete(<?=$row['id']?>)"><i class='bx bx-trash-alt'></i></a>
                         </td>
