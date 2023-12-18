@@ -34,6 +34,14 @@ $total_pages 	= 	ceil($total_rows / $limit)
         <link rel="stylesheet" type="text/css" href="css/style.css">	
         <link rel="stylesheet" type="text/css" href="css/user.css">	
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style type="text/css">
+			.add-btn {
+				color: #fff;
+				background-color: #0e9d24;
+				padding: 8px 12px;
+				font-size: 18px!important;
+			}
+		</style>
     </head>
 
     <body> 
@@ -44,6 +52,7 @@ $total_pages 	= 	ceil($total_rows / $limit)
 		    <form class="searchBarContainer" action="user.php" method="get">
 		    	<input class="searchbar" type="text" name="search" placeholder="Search users..." value="<?php echo $search; ?>"> 
 				<button class="searchBtn" type="submit"><i class='bx bx-search-alt-2' ></i></button>
+				<a class="searchBtn add-btn" href="user-create.php">New</a>
 		    </form>
 		    <table style="margin-bottom: 20px;" width="100%">
 		    	<thead>
@@ -62,8 +71,8 @@ $total_pages 	= 	ceil($total_rows / $limit)
 						<td><?=$row['email'] ?></td>
 						<td><?=$row['contact'] ?></td>
 						<td>
-							<a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)"><i class='bx bx-edit-alt'></i></a>
-							<a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)" onclick="confirmDelete(<?=$row['id']?>)"><i class='bx bx-trash-alt'></i></a>
+							<a style="font-size: 20px;color: #fff;" class="actionBtn" href="user-edit.php?id=<?=$row['id'] ?>"><i class='bx bx-edit-alt'></i></a>
+							<!-- <a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)" onclick="confirmDelete(<?=$row['id']?>)"><i class='bx bx-trash-alt'></i></a> -->
 						</td>
 					</tr>
 		    		<?php endwhile; ?>

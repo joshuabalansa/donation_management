@@ -4,27 +4,13 @@ include "check-session.php";
 include "function.php";
 require "db-connect.php";
 
-if (!isset($_GET['id'])) {
-    exit;
-}
+$show = (isset($_GET['load']) && $_GET['load'] !='') ? $_GET['load'] : '';
 
-$user_id = $_GET['id'];
-
-$sql = "SELECT * FROM users WHERE id='$user_id'";
-$result = $connect->query($sql);
-$row = $result->fetch_assoc();
-
-if (is_null($row)) {
-    exit;
-}
-
-
-
-$name = $row['name'];
-$email = $row['email'];
-$contact = $row['contact'];
-$address = $row['address'];
-$access = $row['access_type'];
+$name = '';
+$email = '';
+$contact = '';
+$address = '';
+$access = '';
 $signup_success = '';
 
 if (isset($_POST['updateUserBtn'])) {
@@ -34,6 +20,7 @@ if (isset($_POST['updateUserBtn'])) {
     $contact = $connect->real_escape_string($_POST['contact']);
     $address = $connect->real_escape_string($_POST['address']);
     $access = $connect->real_escape_string($_POST['access']);
+    $user_id = $_SESSION['user']['id'];
     #var_dump($_POST);
 
     $error = [];
@@ -58,10 +45,10 @@ if (isset($_POST['updateUserBtn'])) {
 
     if (count($error) <= 0) {
 
-        $sql = "UPDATE users SET name='$name', email='$email', contact='$contact', address='$address', access_type='$access' WHERE id='$user_id'";
+        $sql = "INSERT INTO users (name, email, contact, address, access_type, created_at) VALUES ('$name', '$email', '$contact', '$address', '$access', NOW())";
 
         if ($connect->query($sql) === TRUE) {
-            $signup_success = 'Record successfully updated!';
+            $signup_success = 'Record successfully added!';
         } else {
             $signup_success = "Error: " . $sql . "<br>" . $connect->error;
         }
@@ -86,15 +73,15 @@ if (isset($_POST['updateUserBtn'])) {
             <div class="flex-center">
                 <div class="profile">
                     <div class="title">  
-                        <h2>Edit User</h2>
+                        <h2>New User</h2>
                     </div>
-                    <form action="user-edit.php?id=<?php echo $user_id; ?>" method="post">
+        		    <form action="user-create.php" method="post">
 
-                        <?php
-                        if ($signup_success != '') {
-                            echo $signup_success;
-                        }
-                        ?>
+        		        <?php
+        		        if ($signup_success != '') {
+        		            echo $signup_success;
+        		        }
+        		        ?>
 
                         <div class="profile-item">
                             <label for="name">Name: <?php echo (isset($error['name']))? $error['name'] : '';?></label>
@@ -128,12 +115,11 @@ if (isset($_POST['updateUserBtn'])) {
                             <input type="submit" value="Submit" name="updateUserBtn" class="access-type" >
                         </div>
 
-                    </form>
+        		    </form>
 
                 </div>
 
             </div>
-
         </div>
         <?php 
         include 'footer.php';

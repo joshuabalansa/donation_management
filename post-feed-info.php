@@ -19,14 +19,14 @@
             if ($image['error'] !== UPLOAD_ERR_OK) {
                 die("File upload failed with error code: " . $image['error']);
             }
-
+            
             donate(
                 $connect,
                 $donationType,
                 $donation,
                 $image,
                 $postId,
-                $userId,
+                $userId
             );
             exit;
         }
@@ -64,7 +64,7 @@
                         </small>
                     </div>
 
-                    <form action="post-feed-info.php?feed_id=<?=$row['user_id'] ?>" method="post" enctype="multipart/form-data">
+                    <form action="post-feed-info.php?feed_id=<?=$_GET['feed_id'] ?>" method="post" enctype="multipart/form-data">
                         <select name="donation_type" id="donationType" onchange="updateAmountPlaceholder()" required>
                             <option value="monetary">Monetary</option>
                             <option value="goods">Goods</option>

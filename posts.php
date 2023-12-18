@@ -55,6 +55,15 @@ get_alert_Message();
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <link rel="stylesheet" type="text/css" href="css/donations.css">
         <link rel="stylesheet" type="text/css" href="css/user.css">
+        <style type="text/css">
+            .add-btn {
+                color: #fff;
+                background-color: #0e9d24;
+                padding: 8px 12px;
+                font-size: 18px!important;
+                width: 145px !important;
+            }
+        </style>
     </head>
 
     <body>
@@ -64,12 +73,13 @@ get_alert_Message();
         <div class="wrapper">
             <div class="titleBar">
                 <h2 style="color: #fff;">My Posts</h2>
-                <a class="addBtn" href="post-create.php" >Create a Post</a>
+                <!-- <a class="addBtn" href="post-create.php" >Create a Post</a> -->
             </div>
 
             <form class="searchBarContainer" action="posts.php" method="get">
                 <input class="searchbar" type="text" name="search" placeholder="Search users..." value="<?php echo $search; ?>">
                 <button class="searchBtn" type="submit"><i class='bx bx-search-alt-2' ></i></button>
+                <a class="searchBtn add-btn" href="post-create.php">Create a Post</a>
             </form>
 
             <table>

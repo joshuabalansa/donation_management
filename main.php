@@ -8,7 +8,8 @@ $search = '';
 $page = (isset($_GET['page'])) ? $_GET['page'] : 1;
 $limit = 2;
 $skip = ($page - 1) * $limit;
-$sql = "SELECT * FROM posts WHERE status = 'approved' ORDER BY id DESC";
+#$sql = "SELECT * FROM posts WHERE status = 'approved' ORDER BY id DESC";
+$sql = "SELECT * FROM posts ORDER BY id DESC";
 
 $result = postList($connect, $sql);
 

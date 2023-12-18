@@ -6,7 +6,7 @@
     <img class="logo" src="images/edlogo.png">
         <nav>
             <?php
-                $isAdmin = $_SESSION['user']['access_type'] === 'admin';
+                $isAdmin = $_SESSION['user']['access_type'] == 'admin';
             ?>
             <ul class="nav1">
                 <li><a href="main.php">Home</a></li>
