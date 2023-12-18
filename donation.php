@@ -9,13 +9,20 @@ require "db-connect.php";
 
     if($_SESSION['user']['access_type'] === 'admin') {
 
-        $sql = "SELECT * FROM donations";
+        $sql = "SELECT users.name, users.address, users.contact, users.email, donations.id, donations.donation_type, donations.donation
+                FROM users JOIN donations ON users.id = donations.user_id";
+
     } else {
-        $sql = "SELECT * FROM donations WHERE user_id = $user_id";
+        $sql = "SELECT users.name, users.address, users.contact, users.email, donations.id, donations.donation_type, donations.donation
+                FROM users JOIN donations ON users.id = donations.user_id WHERE user_id = $user_id";
     }
 
     $results = $connect->query($sql);
-    
+
+    if (!$results) {
+        die("Error: " . $mysqli->error);
+    }
+
     if(isset($_GET['donationDelete'])) {
         $id = $_GET['donationDelete'];
         deleteDonationById($connect, $id);
@@ -57,7 +64,7 @@ require "db-connect.php";
                         <td><?=$row['id']; ?></td>
                         <td><?=$row['name']?></td>
                         <td><?=$row['address']?></td>
-                        <td><?=$row['phone']?></td>
+                        <td><?=$row['contact']?></td>
                         <td><?=$row['email']?></td>
                         <td><?=$row['donation_type']?></td>
                         <td><?=$row['donation']?></td>
