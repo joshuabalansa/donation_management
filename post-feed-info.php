@@ -8,16 +8,9 @@
     if(isset($_POST['submit'])) {
 
         if($_SERVER['REQUEST_METHOD'] === "POST") {
-            
+
             $postId = isset($_GET['feed_id']) ? $_GET['feed_id'] : '';
             $userId = $_SESSION['user']['id'];
-
-            $userData = userList($connect, "SELECT * FROM users WHERE id = $userId")->fetch_assoc();
-
-            $name       = !empty($userData['name']) ? $userData['name'] : '';
-            $address    = !empty($userData['address']) ? $userData['address'] : '';
-            $phone      = !empty($userData['contact']) ? $userData['contact'] : '';
-            $email       = !empty($userData['email']) ? $userData['email'] : '';
 
             $donationType   = isset($_POST['donation_type'])    ?   $_POST['donation_type'] : '';
             $donation       = isset($_POST['donation'])         ?   $_POST['donation'] : '';
@@ -29,10 +22,6 @@
 
             donate(
                 $connect,
-                $name,
-                $address,
-                $phone,
-                $email,
                 $donationType,
                 $donation,
                 $image,
@@ -84,10 +73,10 @@
                         <input type="text" id="amountInput" name="donation" placeholder="Amount" required>
 
                         <input type="file" name="image" id="image" required>
-                        
+
                         <button name="submit" type="submit" class="donate-button">Donate</button>
                         <a href="main.php" type="submit">Back</a>
-                   
+
                     </form>
                 </div>
             </div>
@@ -95,7 +84,7 @@
     </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        
+
         function updateAmountPlaceholder() {
             var donationType = document.getElementById('donationType');
             var amountInput = document.getElementById('amountInput');

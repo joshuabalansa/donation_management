@@ -362,20 +362,20 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 	}
 }
 
-function donate($connect, $name, $address, $phone, $email, $donationType, $donation, $image, $postId, $userId) {
+function donate($connect, $donationType, $donation, $image, $postId, $userId) {
 
     try {
 		$target_dir = "uploads/";
 		$target_file = $target_dir . basename($image["name"]);
 
 		if(move_uploaded_file($image["tmp_name"], $target_file)) {
-			$sql = "INSERT INTO donations (name, address, phone, email, donation_type, donation, image, post_id, user_id, created_at)
-					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+			$sql = "INSERT INTO donations (donation_type, donation, image, post_id, user_id, created_at)
+					VALUES (?, ?, ?, ?, ?, ?)";
 
 			$currentTimestamp = date("Y-m-d H:i:s");
 
 			$stmt = $connect->prepare($sql);
-			$stmt->bind_param('ssssssiiss', $name, $address, $phone, $email, $donationType, $donation, $target_file, $postId, $userId, $currentTimestamp);
+			$stmt->bind_param('sssiis', $donationType, $donation, $target_file, $postId, $userId, $currentTimestamp);
 
 			if($stmt->execute()) {
 
