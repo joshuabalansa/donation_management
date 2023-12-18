@@ -42,22 +42,23 @@ if(isset($_GET['updateStatus'])) {
     postUpdateStatus($connect, $postId, $status);
 }
 
-if (isset($_SESSION['alert_message'])) {
-    echo '<script>alert("' . $_SESSION['alert_message'] . '");</script>';
-    unset($_SESSION['alert_message']);
+if(isset($_GET['postDelete'])) {
+    $postId = $_GET['postDelete'];
+    postDelete($connect, $postId);
 }
-session_write_close();
+
+get_alert_Message();
 ?>
 <html>
     <head>
         <title>Posts | E - Donate Mo</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">	
-        <link rel="stylesheet" type="text/css" href="css/donations.css">	
-        <link rel="stylesheet" type="text/css" href="css/user.css"> 
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/donations.css">
+        <link rel="stylesheet" type="text/css" href="css/user.css">
     </head>
 
     <body>
-        <?php 
+        <?php
         include 'header.php';
         ?>
         <div class="wrapper">
@@ -65,9 +66,9 @@ session_write_close();
                 <h2 style="color: #fff;">My Posts</h2>
                 <a class="addBtn" href="post-create.php" >Create a Post</a>
             </div>
-            
+
             <form class="searchBarContainer" action="posts.php" method="get">
-                <input class="searchbar" type="text" name="search" placeholder="Search users..." value="<?php echo $search; ?>"> 
+                <input class="searchbar" type="text" name="search" placeholder="Search users..." value="<?php echo $search; ?>">
                 <button class="searchBtn" type="submit"><i class='bx bx-search-alt-2' ></i></button>
             </form>
 
@@ -109,11 +110,11 @@ session_write_close();
             </center>
         </div>
         <script>
-            function confirmDelete(userId) {
+            function confirmDelete(userId, title) {
                 var confirmation = confirm("Are you sure you want to delete this post?")
 
                 if(confirmation) {
-                    window.location.href = "function.php?postDelete=" + userId
+                    window.location.href = "posts.php?postDelete=" + userId
                 }
             }
         </script>

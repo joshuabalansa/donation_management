@@ -6,15 +6,15 @@ function returnJson($data)
 	header("Content-Type: application/json");
 	header('Access-Control-Allow-Credentials: true');
 	header('Access-Control-Max-Age: 86400');
-	
+
 	if (isset($_SERVER['HTTP_ORIGIN'])) {
 	    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
 	} else {
 	    header("Access-Control-Allow-Origin: *");
 	}
-	
+
 	echo json_encode($data);
-	
+
 	exit();
 }
 
@@ -106,6 +106,18 @@ function pagination($page, $total_pages, $search)
     }
 
     return $pagination;
+}
+
+function alert_message($alert_message) {
+	$_SESSION['alert_message'] = $alert_message;
+}
+
+function get_alert_Message() {
+	if (isset($_SESSION['alert_message'])) {
+		echo '<script>alert("' . $_SESSION['alert_message'] . '");</script>';
+		unset($_SESSION['alert_message']);
+		session_write_close();
+	}
 }
 
 
@@ -245,7 +257,7 @@ function deleteDonationById($connect, $id) {
 function postList($connect, $sql)
 {
 	$result = $connect->query($sql);
-	
+
 	return $result;
 }
 
@@ -270,6 +282,23 @@ function postPagination($page, $total_pages, $search)
     return $pagination;
 }
 
+function postDelete($connect, $postId) {
+	try {
+		$sql = "DELETE FROM posts WHERE id = ?";
+		$stmt = $connect->prepare($sql);
+		$stmt->bind_param('i', $postId);
+
+		if ($stmt->execute()) {
+			header('location: posts.php');
+		} else {
+			die($stmt->error);
+		}
+	} catch (Exception $e) {
+		die("Caught Exception: " . $e->getMessage());
+	}
+}
+
+
 function postListing($connect)
 {
 	$sql = "SELECT *, (SELECT name FROM users WHERE id=posts.user_id LIMIT 1) user_post FROM posts ORDER BY id DESC LIMIT 1000";
@@ -279,6 +308,7 @@ function postListing($connect)
 	while($row = $result->fetch_assoc()) {
 		$options .= '<option value="'.$row['id'].'">'.$row['title'].' ('.$row['user_post'].')</option>';
 	}
+
 	return $options;
 }
 
@@ -306,11 +336,11 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 		$target_file = $target_dir . basename($image["name"]);
 
 		if (move_uploaded_file($image["tmp_name"], $target_file)) {
-	
-		
+
+
 			$sql = "INSERT INTO posts (title, description, phone, address, brgy, city, province, image, user_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
 			$stmt = $connect->prepare($sql);
-			$stmt->bind_param('ssssssssi', $title, $description, $phone, $address, $brgy, $city, $province, $target_file, $user_id); 
+			$stmt->bind_param('ssssssssi', $title, $description, $phone, $address, $brgy, $city, $province, $target_file, $user_id);
 
 			if($stmt->execute()) {
 				session_start();
@@ -318,7 +348,7 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
                 session_write_close();
 				$stmt->close();
 				header('location: posts.php');
-				exit; 
+				exit;
 			} else {
 				die("Oops! Something went wrong: " . $stmt->error);
 			}
@@ -326,29 +356,29 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 		} else {
 			die("Failed to move the uploaded file.");
 		}
-			
+
 	} catch (Exception $e) {
 		die("Caught Exception: " . $e->getMessage());
 	}
 }
 
 function donate($connect, $name, $address, $phone, $email, $donationType, $donation, $image, $postId, $userId) {
-    
+
     try {
 		$target_dir = "uploads/";
 		$target_file = $target_dir . basename($image["name"]);
-		
+
 		if(move_uploaded_file($image["tmp_name"], $target_file)) {
 			$sql = "INSERT INTO donations (name, address, phone, email, donation_type, donation, image, post_id, user_id, created_at)
 					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
 
-			$currentTimestamp = date("Y-m-d H:i:s"); 
+			$currentTimestamp = date("Y-m-d H:i:s");
 
 			$stmt = $connect->prepare($sql);
 			$stmt->bind_param('ssssssiiss', $name, $address, $phone, $email, $donationType, $donation, $target_file, $postId, $userId, $currentTimestamp);
 
 			if($stmt->execute()) {
-				
+
 				header('location: main.php');
 			} else {
 				die("Oops! Something went wrong," . $stmt->error());
