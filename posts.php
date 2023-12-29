@@ -42,6 +42,12 @@ if(isset($_GET['updateStatus'])) {
     postUpdateStatus($connect, $postId, $status);
 }
 
+if(isset($_GET['disapproved'])) {
+    $postId = $_GET['disapproved'];
+    $status = "disapproved";
+    postDisapproved($connect, $postId, $status);
+}
+
 if(isset($_GET['postDelete'])) {
     $postId = $_GET['postDelete'];
     postDelete($connect, $postId);
@@ -103,11 +109,14 @@ get_alert_Message();
                         <td><?= substr($row['description'], 0, 50) . (strlen($row['description']) > 100 ? '...' : ''); ?></td>
                         <td><?=$row['phone'] ?></td>
                         <td><?=$row['address'] ?></td>
-                        <td><?=$row['status'] ?></td>
+                        <td style="color:<?= $row['status'] === 'approved' ? '#fff' : '#ff0000' ?>;"><?=ucfirst($row['status']) ?></td>
                         <td colspan="3">
+
                             <?php if(!$isUser): ?>
-                            <a style="font-size: 20px;color: #fff;" class="actionBtn" href="posts.php?updateStatus=<?=$row['id'] ?>"><i class='bx bx-check'></i></a>
+                                <a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)" onclick="approvePost(<?=$row['id']?>)"><i class='bx bx-check'></i></a>
+                                <a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)" onclick="disapproved(<?=$row['id']?>)"><i class='bx bx-x'></i></a>
                             <?php endif; ?>
+
                             <a style="font-size: 20px;color: #fff;" class="actionBtn" href="post-edit.php?id=<?=$row['id'] ?>"><i class='bx bx-edit-alt'></i></a>
                             <a style="font-size: 20px;color: #fff;" class="actionBtn" href="javascript:void(0)" onclick="confirmDelete(<?=$row['id']?>)"><i class='bx bx-trash-alt'></i></a>
                         </td>
@@ -121,10 +130,26 @@ get_alert_Message();
         </div>
         <script>
             function confirmDelete(userId, title) {
-                var confirmation = confirm("Are you sure you want to delete this post?")
+                var message = confirm("Are you sure you want to delete this post?")
 
-                if(confirmation) {
+                if(message) {
                     window.location.href = "posts.php?postDelete=" + userId
+                }
+            }
+
+            function approvePost(userId) {
+
+                var message = confirm("This post will added to the feed");
+                if(message) {
+                    window.location.href = "posts.php?updateStatus=" + userId
+                }
+            }
+
+            function disapproved(userId) {
+                
+                var message = confirm("Are you sure you want to disapproved this post?");
+                if(message) {
+                    window.location.href = "posts.php?disapproved=" + userId
                 }
             }
         </script>

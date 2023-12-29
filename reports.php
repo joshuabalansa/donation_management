@@ -13,28 +13,39 @@ require "db-connect.php";
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" type="text/css" href="css/profile.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .form-wrapper {
+            width: 50rem;
+            position: absolute;
+            top:50%;
+            left: 50%;
+            transform: translate(-20%, -40%);
+        }
+        
+    </style>
 </head>
 
 <body>
     <?php include 'header.php'; ?>
         <div class="wrapper">
-            <form method="get" action="report-generate-1.php" target="_blank">
-                
-                <div class="profile">
-                    <div class="profile-item">
-                        <label for="date_from">From:</label>
-                        <input type="date" id="date_from" class="name" name="date_from" value="" required><br>
-                    </div>
-                    <div class="profile-item">
-                        <label for="date_to">To:</label>
-                        <input type="date" id="date_to" class="name" name="date_to" value="" required><br>
-                    </div>
+            <div class="form-wrapper">
+                <form class="form" method="get" action="report-generate-1.php" target="_blank">
+                    <div class="profile">
+                        <div class="profile-item">
+                            <label for="date_from">From:</label>
+                            <input type="date" id="date_from" class="name" name="date_from" value="" required><br>
+                        </div>
+                        <div class="profile-item">
+                            <label for="date_to">To:</label>
+                            <input type="date" id="date_to" class="name" name="date_to" value="" required><br>
+                        </div>
 
-                    <div class="profile-item">
-                        <input type="submit" value="Generate" name="updateUserBtn" class="access-type" >
+                        <div class="profile-item">
+                            <input type="submit" value="Generate" name="updateUserBtn" class="access-type" >
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     <?php include 'footer.php'; ?>
 </body>

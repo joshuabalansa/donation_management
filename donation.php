@@ -55,7 +55,7 @@ require "db-connect.php";
                     <th>Email</th>
                     <th>Donation Type</th>
                     <th>Donation</th>
-                    <th>Action</th>
+                    <!-- <th>Action</th> -->
                 </tr>
                 </thead>
                 <tbody>
@@ -68,11 +68,11 @@ require "db-connect.php";
                         <td><?=$row['email']?></td>
                         <td><?=$row['donation_type']?></td>
                         <td><?=$row['donation']?></td>
-                        <td colspan="2">
-                        <a title="View donation" style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-list-ul'></i></a>
-                            <i class='bx bx-trash-alt'></i>
-                        </a>
-                        </td>
+                        <!-- <td colspan="2">
+                            <a title="View donation" style="font-size: 20px;color: #fff;" href="javascript:void(0)"><i class='bx bx-list-ul'></i></a>
+                                <i class='bx bx-trash-alt'></i>
+                            </a>
+                        </td> -->
                     </tr>
                     <?php endwhile; ?>
                 </tbody>

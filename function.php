@@ -328,6 +328,23 @@ function postUpdateStatus($connect, $postId, $status) {
     }
 }
 
+function postDisapproved($connect, $postId, $status) {
+
+	try {
+		$sql = "UPDATE posts SET status = ? WHERE id = ?";
+		$stmt = $connect->prepare($sql);
+		$stmt->bind_param('si', $status, $postId);
+		
+		if($stmt->execute()) {
+			header('location: posts.php');
+		} else {
+			die($stmt->error);
+		}
+	} catch(Exception $e) {
+		die("Caught Exception: " . $e->getMessage());
+	}
+}
+
 
 function createPost($connect, $title, $description, $phone, $address, $brgy, $city, $province, $image, $user_id) {
 
