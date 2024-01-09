@@ -20,6 +20,7 @@
                 <li><a href="messages.php">Messages</a></li>
                 <li><a href="posts.php">Posts</a></li>
                 <li><a href="profile.php">Profile</a></li>
+                <li><a href="about.php">About Us</a></li>
             </ul>
         </nav>
         <a class="start" href="javascript:void(0)" onclick="logoutBtn()">Logout</a>
