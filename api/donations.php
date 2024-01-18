@@ -13,7 +13,8 @@ require "../db-connect.php";
 $method = $_SERVER['REQUEST_METHOD'];
 
 if ($method === 'GET') {
-    returnJson($connect->query("SELECT * FROM donations")->fetch_all(MYSQLI_ASSOC));
+     returnJson($connect->query("SELECT users.name, users.address, users.contact, users.email, donations.id, donations.donation_type, donations.donation
+    FROM users JOIN donations ON users.id = donations.user_id")->fetch_all(MYSQLI_ASSOC));
 } else {
     $data = json_decode(file_get_contents('php://input'), true);
 
@@ -21,7 +22,7 @@ if ($method === 'GET') {
         returnJson(["error" => "Missing required fields"]);
     }
 
-    $sql = ($method === 'POST')
+    $sql = ($method === 'POST') 
         ? "INSERT INTO donations (name, description, phone, email, donationType, donation, image) VALUES (?, ?, ?, ?, ?, ?, ?)"
         : "UPDATE donations SET name = ?, description = ?, phone = ?, email = ?, donationType = ?, donation = ?, image = ? WHERE id = ?";
 
@@ -41,6 +42,7 @@ if ($method === 'GET') {
 }
 
 if ($method === 'DELETE') {
+    
     $data = json_decode(file_get_contents("php://input"), true);
     $stmt = $connect->prepare("DELETE FROM donations WHERE id = ?");
     $stmt->bind_param("i", $data['id']);

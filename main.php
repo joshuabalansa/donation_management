@@ -6,7 +6,7 @@ require "db-connect.php";
 
 $search = '';
 $page = (isset($_GET['page'])) ? $_GET['page'] : 1;
-$limit = 2;
+$limit = 10;
 $skip = ($page - 1) * $limit;
 
 $sql = "SELECT * FROM posts WHERE status = 'approved' ORDER BY id DESC";

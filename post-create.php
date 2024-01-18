@@ -15,6 +15,7 @@ if (isset($_POST['submitPost'])) {
         $brgy           =   isset($_POST['brgy'])           ?   $_POST['brgy']            :   '';
         $city           =   isset($_POST['city'])           ?   $_POST['city']            :   '';
         $province       =   isset($_POST['province'])       ?   $_POST['province']        :   '';
+        $expiry_date    =   isset($_POST['expiry_date'])    ?   $_POST['expiry_date']     :   '';
         $image          =   isset($_FILES['image'])         ?   $_FILES['image']          :   [];
         $user_id        =   isset($_SESSION['user']['id'])  ?   $_SESSION['user']['id']   :   '';
         
@@ -27,6 +28,7 @@ if (isset($_POST['submitPost'])) {
             $brgy,
             $city,
             $province,
+            $expiry_date,
             $image,
             $user_id
         );
@@ -130,6 +132,9 @@ if (isset($_POST['submitPost'])) {
 
                 <label for="province">Province: <?php echo (isset($error['province'])) ? $error['province'] : ''; ?></label>
                 <input placeholder="Enter Province" type="text" id="province" name="province" value="<?php echo $province; ?>" required>
+
+                <label for="expiry_date">Expiry Date: <?php echo (isset($error['expiry_date'])) ? $error['expiry_date'] : ''; ?></label>
+                <input type="date" id="expiry_date" name="expiry_date" required>
 
                 <label for="image">Image: <?php echo (isset($error['image'])) ? $error['image'] : ''; ?></label>
                 <input type="file" id="image" name="image" accept="image/*" required>

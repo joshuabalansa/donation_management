@@ -25,6 +25,7 @@ $address = $row['address'];
 $brgy = $row['brgy'];
 $city = $row['city'];
 $province = $row['province'];
+$expiry_date = $row['expiry_date'];
 $image = '';
 $success = '';
 
@@ -35,8 +36,9 @@ if (isset($_POST['submitPost'])) {
     $phone = $connect->real_escape_string($_POST['phone']);
     $brgy = $connect->real_escape_string($_POST['brgy']);
     $address = $connect->real_escape_string($_POST['address']);
-    $address = $connect->real_escape_string($_POST['city']);
-    $address = $connect->real_escape_string($_POST['province']);
+    $city = $connect->real_escape_string($_POST['city']);
+    $province = $connect->real_escape_string($_POST['province']);
+    $expiry_date = $connect->real_escape_string($_POST['expiry_date']);
 
     $error = [];
 
@@ -65,6 +67,9 @@ if (isset($_POST['submitPost'])) {
     if (empty($province)) {
         $error['province'] = 'Province is required!';
     }
+    if (empty($expiry_date)) {
+        $error['expiry_date'] = 'expiry_date is required!';
+    }
 
     if (count($error) <= 0) {
 
@@ -72,7 +77,7 @@ if (isset($_POST['submitPost'])) {
         $image = $_FILES['image'];
         $image_dir = "uploads/post/" . basename($image["name"]);
 
-        $sql = "UPDATE posts SET title='$title', description='$description', phone='$phone', address='$address', brgy='$brgy', city='$city', province='$province', user_id='$user_id', image='$image_dir' WHERE id='$id'";
+        $sql = "UPDATE posts SET title='$title', description='$description', phone='$phone', address='$address', brgy='$brgy', city='$city', province='$province', expiry_date='$expiry_date', user_id='$user_id', image='$image_dir' WHERE id='$id'";
 
         if ($connect->query($sql) === TRUE) {
 
@@ -183,6 +188,15 @@ if (isset($_POST['submitPost'])) {
 
                 <label for="province">Province: <?php echo (isset($error['province'])) ? $error['province'] : ''; ?></label>
                 <input placeholder="Enter Province" type="text" id="province" name="province" value="<?php echo $province; ?>" required>
+
+                <label for="expiry_date">Expiry Date: <?php echo (isset($error['expiry_date'])) ? $error['expiry_date'] : ''; ?></label>
+                <input 
+                    type="date" 
+                    value="<?= isset($row['expiry_date']) ?  $row['expiry_date'] : '' ?>" 
+                    id="expiry_date" 
+                    name="expiry_date" 
+                    required
+                >
 
                 <label for="image">Image: <?php echo (isset($error['image'])) ? $error['image'] : ''; ?></label>
                 <input type="file" id="image" name="image" accept="image/*" required>

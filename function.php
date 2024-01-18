@@ -328,6 +328,28 @@ function postUpdateStatus($connect, $postId, $status) {
     }
 }
 
+// update status to expired if date now > post expiry_date
+
+function updateExpirationDate($connect) {
+
+	try {
+		$currentDate = date("Y-m-d");
+		$sql = "UPDATE posts SET status = 'expired' WHERE expiry_date <= ?";
+		$stmt = $connect->prepare($sql);
+		
+		if (!$stmt) {
+			die("Error preparing statement: " . $connect->error);
+		}
+		
+		$stmt->bind_param("s", $currentDate);
+		$stmt->execute();
+	} catch(Exception $e) {
+		
+		echo "<script>alert('Opps! Something went wrong')</script>";
+	}
+		
+}
+
 function postDisapproved($connect, $postId, $status) {
 
 	try {
@@ -346,7 +368,7 @@ function postDisapproved($connect, $postId, $status) {
 }
 
 
-function createPost($connect, $title, $description, $phone, $address, $brgy, $city, $province, $image, $user_id) {
+function createPost($connect, $title, $description, $phone, $address, $brgy, $city, $province, $expiry_date, $image, $user_id) {
 
 	try {
 		$target_dir = "uploads/";
@@ -355,9 +377,9 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 		if (move_uploaded_file($image["tmp_name"], $target_file)) {
 
 
-			$sql = "INSERT INTO posts (title, description, phone, address, brgy, city, province, image, user_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
+			$sql = "INSERT INTO posts (title, description, phone, address, brgy, city, province, expiry_date, image, user_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?,?, ?, ?, CURRENT_TIMESTAMP)";
 			$stmt = $connect->prepare($sql);
-			$stmt->bind_param('ssssssssi', $title, $description, $phone, $address, $brgy, $city, $province, $target_file, $user_id);
+			$stmt->bind_param('sssssssssi', $title, $description, $phone, $address, $brgy, $city, $province, $expiry_date, $target_file, $user_id);
 
 			if($stmt->execute()) {
 				session_start();
@@ -375,7 +397,7 @@ function createPost($connect, $title, $description, $phone, $address, $brgy, $ci
 		}
 
 	} catch (Exception $e) {
-		die("Caught Exception: " . $e->getMessage());
+		die("Caught Exception: " . $e);
 	}
 }
 

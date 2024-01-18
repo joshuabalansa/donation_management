@@ -15,7 +15,7 @@ if($isUser) {
 
 $search     =   '';
 $page       =   (isset($_GET['page'])) ? $_GET['page'] : 1;
-$limit      =   8;
+$limit      =   10;
 $skip       =   ($page - 1) * $limit;
 $sql        =   "SELECT * FROM posts $filteredQuery";
 $sqlCount   =   "SELECT COUNT(*) totalRows FROM posts";
@@ -52,7 +52,10 @@ if(isset($_GET['postDelete'])) {
     $postId = $_GET['postDelete'];
     postDelete($connect, $postId);
 }
-
+// $currentDate = date("Y-m-d");
+// $sqlQuery = "UPDATE posts SET status = 'expired' WHERE expiry_date <= '$currentDate'";
+// $result = $connect->query($sqlQuery);
+updateExpirationDate($connect);
 get_alert_Message();
 ?>
 <html>
@@ -96,6 +99,7 @@ get_alert_Message();
                     <th>Description</th>
                     <th>Phone</th>
                     <th>Address</th>
+                    <th>Expiration</th>
                     <th>status</th>
                     <th>Action</th>
                 </tr>
@@ -109,6 +113,7 @@ get_alert_Message();
                         <td><?= substr($row['description'], 0, 50) . (strlen($row['description']) > 100 ? '...' : ''); ?></td>
                         <td><?=$row['phone'] ?></td>
                         <td><?=$row['address'] ?></td>
+                        <td><?=$row['expiry_date'] ?></td>
                         <td style="color:<?= $row['status'] === 'approved' ? '#fff' : '#ff0000' ?>;"><?=ucfirst($row['status']) ?></td>
                         <td colspan="3">
 
