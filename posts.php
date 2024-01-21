@@ -37,15 +37,21 @@ $total_rows     =   totalRows($connect, $sqlCount);
 $total_pages    =   ceil($total_rows / $limit);
 
 if(isset($_GET['updateStatus'])) {
-    $postId = $_GET['updateStatus'];
-    $status = "approved";
-    postUpdateStatus($connect, $postId, $status);
+    $postId     =   $_GET['updateStatus'];
+    $status     =   "approved";
+    $table      =   "posts";
+    $redirect   =   "posts.php";
+
+    updateStatus($connect, $table, $postId, $status, $redirect);
 }
 
 if(isset($_GET['disapproved'])) {
-    $postId = $_GET['disapproved'];
-    $status = "disapproved";
-    postDisapproved($connect, $postId, $status);
+    $postId     =   $_GET['disapproved'];
+    $status     =   "disapproved";
+    $table      =   "posts";
+    $redirect   =   "posts.php";
+
+    updateStatus($connect, $table, $postId, $status, $redirect);
 }
 
 if(isset($_GET['postDelete'])) {
@@ -114,7 +120,7 @@ get_alert_Message();
                         <td><?=$row['phone'] ?></td>
                         <td><?=$row['address'] ?></td>
                         <td><?=$row['expiry_date'] ?></td>
-                        <td style="color:<?= $row['status'] === 'approved' ? '#fff' : '#ff0000' ?>;"><?=ucfirst($row['status']) ?></td>
+                        <td style="color:<?= $row['status'] === 'approved' ? '#fff' : ($row['status'] === 'pending' ?  '#FFC300' : '#ff0000') ?>;"><?=ucfirst($row['status']) ?></td>
                         <td colspan="3">
 
                             <?php if(!$isUser): ?>

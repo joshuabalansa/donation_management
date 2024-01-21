@@ -199,61 +199,6 @@ function deleteDonationById($connect, $id) {
 	}
 }
 
-// function insertDonation($connect, $post_id, $description, $phone, $brgy, $donationType, $donation, $image) {
-
-// 	$target_dir = "uploads/";
-//     $target_file = $target_dir . basename($image["name"]);
-
-//     move_uploaded_file($image["tmp_name"], $target_file);
-
-// 	try {
-// 		$sql = "INSERT INTO donations (post_id, description, phone, brgy, donationType, donation, image, created_at)
-// 		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-// 		$stmt = $connect->prepare($sql);
-// 		$stmt->bind_param('isssssss', $post_id, $description, $phone, $brgy, $donationType, $donation, $target_file, date('Y-m-d H:i:s'));
-
-// 		if($stmt->execute()) {
-// 			header('location: donation.php');
-// 		} else {
-// 			echo "Opps! Something went wrong," . $stmt->error();
-// 		}
-// 	} catch(Exception $e) {
-// 		echo "Caught exception" . $e->getMessage();
-// 	}
-// }
-
-// function updateDonationRecord($connect, $data) {
-
-// 	$id = isset($data['id']) ? $data['id'] : '';
-// 	$post_id = isset($data['post_id']) ? $data['post_id'] : '';
-// 	$description = isset($data['description']) ? $data['description'] : '';
-// 	$phone = isset($data['phone']) ? $data['phone'] : '';
-// 	$brgy = isset($data['brgy']) ? $data['brgy'] : '';
-// 	$donationType = isset($data['donationType']) ? $data['donationType'] : '';
-// 	$donation = isset($data['donation']) ? $data['donation'] : '';
-
-// 	try {
-
-// 		$sql = "UPDATE donations SET post_id = ?, description = ?, phone = ?, brgy = ?, donationType = ?, donation = ? WHERE id = ?";
-// 		$stmt = $connect->prepare($sql);
-// 		$stmt->bind_param('isssssi', $post_id, $description, $phone, $brgy, $donationType, $donation, $id);
-
-// 		if ($stmt->execute()) {
-
-// 			header('location: donation.php');
-// 		} else {
-
-// 			echo "Opps! Something went wrong" . $stmt->error();
-// 		}
-// 		$stmt->close();
-// 		$connect->close();
-
-// 	} catch(Exception $e) {
-// 		echo "Caught exception: " . $e->getMessage();
-// 	}
-// }
-
 function postList($connect, $sql)
 {
 	$result = $connect->query($sql);
@@ -312,14 +257,15 @@ function postListing($connect)
 	return $options;
 }
 
-function postUpdateStatus($connect, $postId, $status) {
+// update status
+function updateStatus($connect, $table, $postId, $status, $redirect) {
     try {
-        $sql = "UPDATE posts SET status = ? WHERE id = ?";
+        $sql = "UPDATE $table SET status = ? WHERE id = ?";
         $stmt = $connect->prepare($sql);
         $stmt->bind_param('si', $status, $postId);
 
         if ($stmt->execute()) {
-            header('location: posts.php');
+            header("location: $redirect");
         } else {
             die($stmt->error);
         }

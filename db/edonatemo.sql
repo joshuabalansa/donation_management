@@ -25,13 +25,14 @@ CREATE TABLE IF NOT EXISTS `donations` (
   `donation_type` varchar(255) NOT NULL,
   `donation` varchar(255) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT 'pending',
   `post_id` int NOT NULL,
   `user_id` int DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `post_id` (`post_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Data exporting was unselected.
 
@@ -72,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `messenger` (
   `deleted_at` datetime DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
@@ -90,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
   KEY `messenger_id` (`messenger_id`) USING BTREE,
   KEY `sender_user_id` (`sender_user_id`) USING BTREE,
   KEY `receiver_user_id` (`receiver_user_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
@@ -110,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `created_at` date DEFAULT NULL,
   `status` varchar(50) DEFAULT 'pending',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Data exporting was unselected.
 

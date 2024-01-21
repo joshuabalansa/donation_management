@@ -72,6 +72,7 @@
 
                         <input type="text" id="amountInput" name="donation" placeholder="Amount" required>
 
+                        <textarea name="description" id="description" placeholder="  Description..." cols="70" rows="5"></textarea>
                         <input type="file" name="image" id="image" required>
 
                         <button name="submit" type="submit" class="donate-button">Donate</button>

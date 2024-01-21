@@ -10,6 +10,7 @@
             ?>
             <ul class="nav1">
                 <li><a href="main.php">Home</a></li>
+                <li><a href="main.php?forum=forum">Forum</a></li>
                 <?php if($isAdmin) : ?>
                     <li><a href="user.php">Users</a></li>
                 <?php endif; ?>

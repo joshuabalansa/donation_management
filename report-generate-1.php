@@ -62,7 +62,21 @@ $result = $connect->query($sql);
                 ?>
             </tbody>
         </table>
+        <br><br>
+        <center>
+            <button id="printButton" onclick="printPage()">Print Page</button>
+        </center>
+<script>
 
+        let button = document.getElementById("printButton");
+
+        function printPage() {
+          
+            button.style.display = "none";
+            window.print();
+            button.style.display = "block";
+        }
+</script>
     </body>
 
 </html>
