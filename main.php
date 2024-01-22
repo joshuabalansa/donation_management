@@ -43,6 +43,8 @@ $result = postList($connect, $sql);
     <?php include 'header.php'; ?>
     <div class="feed-wrapper">
         <?php
+        if (isset($_GET['forum'])) {
+            
             while ($row = $result->fetch_assoc()) :
                 $img_placeholder = 'https://placehold.co/600x400?text=e-donate+mo';
                 $user = getUserDetails($connect, $row['id']);
@@ -54,12 +56,12 @@ $result = postList($connect, $sql);
                 <div class="description"><?= substr($row['description'], 0, 80) . (strlen($row['description']) > 100 ? '...' : ''); ?></div>
                 <small><?= $row['created_at'] ?> - <?= $row['name'] ?></small>
 
-                <?php if(!isset($_GET['forum'])): ?>
                     <a href="post-feed-info.php?feed_id=<?=$row['id']?>" class="donate-button">Donate</a>
-                <?php endif; ?>
 
             </div>
-        <?php endwhile; ?>
+        <?php endwhile; 
+        }
+        ?>
     </div>
     <?php # include 'footer.php'; ?>
 </body>

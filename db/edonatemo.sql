@@ -2,6 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               8.0.30 - MySQL Community Server - GPL
 -- Server OS:                    Win64
+
 -- HeidiSQL Version:             12.1.0.6537
 -- --------------------------------------------------------
 
@@ -16,7 +17,7 @@
 
 
 -- Dumping database structure for edonatemo
-CREATE DATABASE IF NOT EXISTS `edonatemo` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE IF NOT EXISTS `edonatemo` /*!40100 DEFAULT CHARACTER SET utf8mb4 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `edonatemo`;
 
 -- Dumping structure for table edonatemo.donations
@@ -32,34 +33,7 @@ CREATE TABLE IF NOT EXISTS `donations` (
   PRIMARY KEY (`id`),
   KEY `post_id` (`post_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Data exporting was unselected.
-
--- Dumping structure for table edonatemo.goods_dono
-CREATE TABLE IF NOT EXISTS `goods_dono` (
-  `goods_dono_ID` int NOT NULL AUTO_INCREMENT,
-  `org_ID` int DEFAULT NULL,
-  `goods_donation_description` text,
-  `date_dono` date DEFAULT NULL,
-  `status` varchar(20) DEFAULT 'PENDING',
-  PRIMARY KEY (`goods_dono_ID`),
-  KEY `org_ID` (`org_ID`),
-  CONSTRAINT `goods_dono_ibfk_1` FOREIGN KEY (`org_ID`) REFERENCES `organization` (`org_ID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- Data exporting was unselected.
-
--- Dumping structure for table edonatemo.messages
-CREATE TABLE IF NOT EXISTS `messages` (
-  `message_id` int NOT NULL AUTO_INCREMENT,
-  `org_ID` int DEFAULT NULL,
-  `message_description` text,
-  `date` date DEFAULT NULL,
-  PRIMARY KEY (`message_id`),
-  KEY `org_ID` (`org_ID`),
-  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`org_ID`) REFERENCES `organization` (`org_ID`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4;
 
 -- Data exporting was unselected.
 
@@ -101,17 +75,17 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `title` varchar(255) DEFAULT NULL,
   `description` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
-  `address` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `brgy` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `city` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `province` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `address` varchar(50) CHARACTER SET utf8mb4 NOT NULL,
+  `brgy` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `city` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `province` varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
   `expiry_date` date DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   `created_at` date DEFAULT NULL,
   `status` varchar(50) DEFAULT 'pending',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4;
 
 -- Data exporting was unselected.
 
